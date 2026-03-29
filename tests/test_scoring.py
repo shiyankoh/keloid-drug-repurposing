@@ -4,6 +4,8 @@ from scripts.score_candidates import (
     query_overlaps,
     compute_scores,
     normalize_overlap_counts,
+    load_severity_tiers,
+    apply_severity_tiers,
 )
 
 
@@ -190,6 +192,32 @@ class TestComputeScores:
         drug_f = [s for s in scores if s["drug_name"] == "DRUG_F"][0]
         assert drug_f["pathway_overlap_count"] == 0
         assert drug_f["multi_target_bonus"] == 0.0
+
+
+class TestSeverityTiers:
+    def test_load_severity_tiers(self, tmp_path):
+        csv_content = "drug_name,tier,notes\nASPIRIN,green,OTC NSAID\nSORFENIB,red,Oncology-only\n"
+        csv_path = tmp_path / "tiers.csv"
+        csv_path.write_text(csv_content)
+        tiers = load_severity_tiers(str(csv_path))
+        assert tiers["ASPIRIN"]["tier"] == "green"
+        assert tiers["SORFENIB"]["tier"] == "red"
+
+    def test_load_missing_file_returns_empty(self, tmp_path):
+        tiers = load_severity_tiers(str(tmp_path / "nonexistent.csv"))
+        assert tiers == {}
+
+    def test_apply_tiers_to_scores(self):
+        scores = [
+            {"drug_name": "ASPIRIN", "composite_score": 0.5},
+            {"drug_name": "UNKNOWN_DRUG", "composite_score": 0.3},
+        ]
+        tiers = {"ASPIRIN": {"tier": "green", "notes": "OTC"}}
+        result = apply_severity_tiers(scores, tiers)
+        assert result[0]["severity_tier"] == "green"
+        assert result[0]["severity_notes"] == "OTC"
+        assert result[1]["severity_tier"] == "unclassified"
+        assert result[1]["severity_notes"] == ""
 
 
 class TestNormalizeOverlapCounts:

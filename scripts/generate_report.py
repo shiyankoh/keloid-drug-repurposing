@@ -11,40 +11,106 @@ logger = logging.getLogger(__name__)
 SCORES_PATH = os.path.join(os.path.dirname(__file__), "..", "data", "raw", "scores.json")
 OUTPUT_DIR = os.path.join(os.path.dirname(__file__), "..", "output")
 
+TIER_LABELS = {
+    "green": "Low risk",
+    "yellow": "Moderate risk",
+    "red": "High risk",
+    "unclassified": "Not yet classified",
+}
+
+TIER_EMOJI = {
+    "green": "G",
+    "yellow": "Y",
+    "red": "R",
+    "unclassified": "?",
+}
+
 
 def generate_report(scores, top_n=20):
     """Generate Markdown report string from scored candidates."""
     today = date.today().isoformat()
+
+    # Separate actionable candidates (green/yellow with 2+ curated pathways)
+    actionable = [
+        s for s in scores
+        if s.get("severity_tier") in ("green", "yellow")
+        and s["pathway_overlap_count"] >= 2
+    ]
+
     lines = [
         f"# Keloid Drug Repurposing Candidates",
         f"",
         f"*Generated {today} — {len(scores)} candidates scored*",
         f"",
-        f"**Scoring formula:** `v1_score = overlap×0.40 + evidence×0.40 + multi_target×0.20`",
+        f"**Scoring formula:** `v1_score = overlap x 0.40 + evidence x 0.40 + multi_target x 0.20`",
+        f"",
+        f"**Severity tiers:** [G] Green = low risk, feasible for keloid use | "
+        f"[Y] Yellow = moderate risk, needs careful evaluation | "
+        f"[R] Red = high risk, oncology-grade toxicity | "
+        f"[?] Unclassified",
         f"",
         f"> This is a hypothesis generator, not medical advice. Discuss any candidate with a dermatologist before use.",
         f"",
         f"---",
         f"",
-        f"## Top {min(top_n, len(scores))} Candidates",
-        f"",
-        f"| Rank | Drug | Score | Pathways Hit | Avg Evidence | Multi-target |",
-        f"|------|------|-------|-------------|-------------|-------------|",
     ]
 
-    for i, s in enumerate(scores[:top_n], 1):
-        mt = "Yes" if s["multi_target_bonus"] else "-"
+    # Actionable candidates section (the most useful part)
+    lines.extend([
+        f"## Actionable Candidates ({len(actionable)} drugs)",
+        f"",
+        f"These drugs have green/yellow safety profiles AND hit 2+ curated keloid pathways.",
+        f"Sorted by composite score.",
+        f"",
+        f"| Rank | Drug | Score | Pathways | Avg Evidence | Tier | Safety Notes |",
+        f"|------|------|-------|----------|-------------|------|-------------|",
+    ])
+
+    for i, s in enumerate(actionable, 1):
+        tier = s.get("severity_tier", "unclassified")
+        tier_tag = f"[{TIER_EMOJI[tier]}]"
+        notes = s.get("severity_notes", "")
+        # Truncate notes for table
+        short_notes = notes[:60] + "..." if len(notes) > 60 else notes
         lines.append(
             f"| {i} | {s['drug_name']} | {s['composite_score']:.4f} | "
-            f"{s['pathway_overlap_count']} | {s['avg_evidence_strength']:.4f} | {mt} |"
+            f"{s['pathway_overlap_count']} | {s['avg_evidence_strength']:.4f} | "
+            f"{tier_tag} | {short_notes} |"
         )
 
     lines.extend(["", "---", ""])
 
-    lines.extend([f"## Detailed Briefs (Top 10)", ""])
-    for i, s in enumerate(scores[:10], 1):
-        lines.append(f"### {i}. {s['drug_name']}")
+    # Full top N (all tiers)
+    lines.extend([
+        f"## All Top {min(top_n, len(scores))} Candidates (any tier)",
+        f"",
+        f"| Rank | Drug | Score | Pathways | Avg Evidence | Multi-target | Tier |",
+        f"|------|------|-------|----------|-------------|-------------|------|",
+    ])
+
+    for i, s in enumerate(scores[:top_n], 1):
+        mt = "Yes" if s["multi_target_bonus"] else "-"
+        tier = s.get("severity_tier", "unclassified")
+        tier_tag = f"[{TIER_EMOJI[tier]}]"
+        lines.append(
+            f"| {i} | {s['drug_name']} | {s['composite_score']:.4f} | "
+            f"{s['pathway_overlap_count']} | {s['avg_evidence_strength']:.4f} | "
+            f"{mt} | {tier_tag} |"
+        )
+
+    lines.extend(["", "---", ""])
+
+    # Detailed briefs for top actionable candidates
+    brief_candidates = actionable[:10] if actionable else scores[:10]
+    brief_label = "Top Actionable" if actionable else "Top 10"
+    lines.extend([f"## Detailed Briefs ({brief_label})", ""])
+
+    for i, s in enumerate(brief_candidates, 1):
+        tier = s.get("severity_tier", "unclassified")
+        lines.append(f"### {i}. {s['drug_name']} [{TIER_EMOJI[tier]}]")
         lines.append("")
+        if s.get("severity_notes"):
+            lines.append(f"**Safety:** {s['severity_notes']}")
         if s.get("original_indication"):
             lines.append(f"**Approved for:** {s['original_indication']}")
         if s.get("mechanism_of_action"):
@@ -53,13 +119,22 @@ def generate_report(scores, top_n=20):
         lines.append(f"**Distinct keloid pathways:** {s['pathway_overlap_count']} ({', '.join(s['pathways'])})")
         lines.append("")
 
-        lines.append("| Gene | Pathway | Action | Evidence |")
-        lines.append("|------|---------|--------|----------|")
-        for g in s.get("gene_details", []):
-            lines.append(
-                f"| {g['gene_symbol']} | {g['pathway']} | "
-                f"{g['action_type']} | {g['evidence_strength']:.2f} |"
-            )
+        # Only show curated pathway gene details (skip OpenTargets noise in briefs)
+        curated_details = [g for g in s.get("gene_details", []) if g["pathway"] != "OpenTargets_association"]
+        ot_details = [g for g in s.get("gene_details", []) if g["pathway"] == "OpenTargets_association"]
+
+        if curated_details:
+            lines.append("| Gene | Pathway | Action | Evidence |")
+            lines.append("|------|---------|--------|----------|")
+            for g in curated_details:
+                lines.append(
+                    f"| {g['gene_symbol']} | {g['pathway']} | "
+                    f"{g['action_type']} | {g['evidence_strength']:.2f} |"
+                )
+            if ot_details:
+                lines.append(f"")
+                lines.append(f"*Plus {len(ot_details)} additional OpenTargets gene associations (low confidence, omitted for clarity)*")
+
         lines.extend([
             "",
             "**Next steps:** Discuss with dermatologist. Search PubMed for "

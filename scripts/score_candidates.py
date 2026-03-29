@@ -1,10 +1,14 @@
 """Score drug candidates by keloid pathway overlap."""
 
+import csv
 import logging
+import os
 from scripts.db import get_connection, init_db
 
 logging.basicConfig(level=logging.INFO, format="%(levelname)s: %(message)s")
 logger = logging.getLogger(__name__)
+
+SEVERITY_CSV = os.path.join(os.path.dirname(__file__), "..", "data", "severity_tiers.csv")
 
 W_OVERLAP = 0.40
 W_EVIDENCE = 0.40
@@ -99,6 +103,38 @@ def compute_scores(overlaps):
     return scores
 
 
+def load_severity_tiers(csv_path=None):
+    """Load severity tier classifications from CSV.
+    Returns dict of drug_name → {tier, notes}."""
+    path = csv_path or SEVERITY_CSV
+    tiers = {}
+    if not os.path.exists(path):
+        logger.warning(f"Severity tiers CSV not found at {path}")
+        return tiers
+    with open(path) as f:
+        reader = csv.DictReader(f)
+        for row in reader:
+            tiers[row["drug_name"]] = {
+                "tier": row["tier"],
+                "notes": row["notes"],
+            }
+    return tiers
+
+
+def apply_severity_tiers(scores, tiers):
+    """Add severity_tier and severity_notes to each score entry.
+    Unclassified drugs get tier='unclassified'."""
+    for s in scores:
+        tier_info = tiers.get(s["drug_name"])
+        if tier_info:
+            s["severity_tier"] = tier_info["tier"]
+            s["severity_notes"] = tier_info["notes"]
+        else:
+            s["severity_tier"] = "unclassified"
+            s["severity_notes"] = ""
+    return scores
+
+
 def main():
     conn = get_connection()
 
@@ -109,6 +145,8 @@ def main():
         return
 
     scores = compute_scores(overlaps)
+    tiers = load_severity_tiers()
+    scores = apply_severity_tiers(scores, tiers)
     logger.info(f"Scored {len(scores)} drug candidates")
 
     print(f"\n{'Rank':<6}{'Drug':<25}{'Score':<8}{'Pathways':<10}{'Avg Evidence':<14}{'Multi-target'}")

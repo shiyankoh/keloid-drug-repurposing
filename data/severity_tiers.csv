@@ -1,0 +1,51 @@
+drug_name,tier,notes
+SORAFENIB,red,Multi-kinase inhibitor. Hand-foot syndrome, hypertension, hepatotoxicity. Oncology-only.
+ERLOTINIB,red,EGFR inhibitor. Severe rash, diarrhea, ILD risk. Oncology-only.
+OSIMERTINIB,red,3rd-gen EGFR inhibitor. QTc prolongation, ILD. Oncology-only.
+LENALIDOMIDE,yellow,Immunomodulator. Teratogenic (thalidomide analog), neutropenia. Used in non-cancer (myelofibrosis).
+MIDOSTAURIN,red,Multi-kinase inhibitor. GI toxicity, QTc. Oncology-only.
+DASATINIB ANHYDROUS,red,BCR-ABL inhibitor. Pleural effusion, pulmonary hypertension. Oncology-only.
+CARBOPLATIN,red,Platinum chemo. Myelosuppression, nephrotoxicity. Never appropriate for benign condition.
+RITUXIMAB,yellow,Anti-CD20 mAb. Infusion reactions, immunosuppression. Used in autoimmune diseases (RA, pemphigus).
+IMATINIB,yellow,TKI. Edema, GI, myelosuppression. Studied in systemic sclerosis. Manageable side effects at lower doses.
+DOXORUBICIN HYDROCHLORIDE,red,Anthracycline chemo. Cardiotoxicity, myelosuppression. Never appropriate for benign condition.
+CELECOXIB,green,COX-2 inhibitor (Celebrex). OTC-adjacent. Mild GI/CV risk at chronic use. Very feasible for keloid trial.
+NERATINIB,red,HER2 inhibitor. Severe diarrhea. Oncology-only.
+PEGINTERFERON ALFA-2B,yellow,Interferon. Flu-like symptoms, depression, cytopenias. Already used for keloids (intralesional).
+CRIZOTINIB,red,ALK inhibitor. Hepatotoxicity, visual disturbance. Oncology-only.
+CABOZANTINIB S-MALATE,red,Multi-kinase inhibitor. GI perforation risk, hemorrhage. Oncology-only.
+DEXAMETHASONE,green,Corticosteroid. Already widely used for keloids (intralesional injection). Well-understood side profile.
+PEMBROLIZUMAB,red,Checkpoint inhibitor. Immune-related AEs (colitis, hepatitis, endocrinopathy). Oncology-only.
+REGORAFENIB,red,Multi-kinase inhibitor. Hand-foot, hepatotoxicity. Oncology-only.
+THALIDOMIDE,yellow,Immunomodulator. Teratogenic, neuropathy. Used in non-cancer (ENL, myeloma maintenance).
+CETUXIMAB,red,Anti-EGFR mAb. Severe infusion reactions, acneiform rash. Oncology-only.
+BEVACIZUMAB,red,Anti-VEGF mAb. GI perforation, hemorrhage, hypertension. Oncology-only.
+VANDETANIB,red,Multi-kinase inhibitor. QTc prolongation (boxed warning). Oncology-only.
+SIROLIMUS,green,mTOR inhibitor. Already used topically for keloids. Oral form used in transplant. Well-studied safety.
+PACLITAXEL,red,Taxane chemo. Myelosuppression, neuropathy. Never appropriate for benign condition.
+ASPIRIN,green,NSAID. OTC. Extremely well-known safety profile. Very feasible.
+CISPLATIN,red,Platinum chemo. Nephrotoxicity, ototoxicity. Never appropriate for benign condition.
+CUCURBITACIN B,yellow,Natural compound. Limited human safety data. Experimental.
+MILTEFOSINE,yellow,Antiparasitic. GI side effects, teratogenic. Approved for leishmaniasis. Oral, manageable.
+RAMUCIRUMAB,red,Anti-VEGFR2 mAb. GI perforation, hemorrhage. Oncology-only.
+TRIFLUOPERAZINE,yellow,Antipsychotic (phenothiazine). Extrapyramidal symptoms, sedation. Repurposing would need low-dose study.
+AFLIBERCEPT,yellow,Anti-VEGF fusion protein. Used intravitreally in ophthalmology — local use precedent exists.
+ALFENTANIL HYDROCHLORIDE,red,Opioid analgesic. Respiratory depression. Not relevant for keloid treatment.
+AMIODARONE HYDROCHLORIDE,red,Antiarrhythmic. Pulmonary toxicity, thyroid dysfunction, hepatotoxicity. Too toxic for benign use.
+AMSACRINE,red,Chemo agent. Cardiotoxicity, myelosuppression. Oncology-only.
+BEVACIZUMAB-BVZR,red,Biosimilar bevacizumab. Same risk profile as bevacizumab.
+BROLUCIZUMAB,yellow,Anti-VEGF (intravitreal). Local delivery precedent. Retinal vasculitis risk with systemic unclear.
+CANTHARIDIN,yellow,Topical vesicant. Used in dermatology (wart removal). Topical route exists — potential for local keloid use.
+CEMIPLIMAB,red,Checkpoint inhibitor. Immune-related AEs. Oncology-only.
+CERTOLIZUMAB PEGOL,yellow,Anti-TNF. Used in RA, Crohn's. Immunosuppression risk but manageable. Established in non-cancer.
+CETYLPYRIDINIUM,green,Antiseptic. Used in mouthwash. Extremely safe topically.
+CHLORHEXIDINE HYDROCHLORIDE,green,Antiseptic. Topical. Extremely safe.
+CHLORQUINALDOL,green,Topical antimicrobial. Used in dermatology. Very safe.
+CILOSTAZOL,green,PDE3 inhibitor (claudication). Oral, generally well tolerated. Headache, GI.
+CROMOLYN SODIUM,green,Mast cell stabilizer. Extremely safe. Used for allergies. Topical/inhaled.
+DIDANOSINE,red,Antiretroviral (NRTI). Pancreatitis, neuropathy. Not relevant.
+DOXAZOSIN MESYLATE,green,Alpha-blocker (BPH/hypertension). Oral, well tolerated. Dizziness, hypotension.
+DOXEPIN HYDROCHLORIDE,yellow,Tricyclic antidepressant. Also available as topical cream (Zonalon). Sedation, anticholinergic.
+DULOXETINE HYDROCHLORIDE,yellow,SNRI antidepressant. Nausea, dizziness. Oral, manageable.
+DURVALUMAB,red,Checkpoint inhibitor. Immune-related AEs. Oncology-only.
+EBASTINE,green,Antihistamine. OTC-equivalent. Very safe.
