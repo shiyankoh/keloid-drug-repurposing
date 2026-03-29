@@ -80,6 +80,41 @@ def generate_report(scores, top_n=20):
 
     lines.extend(["", "---", ""])
 
+    # Clinical trials section
+    drugs_with_trials = [s for s in scores if s.get("clinical_trials")]
+    if drugs_with_trials:
+        lines.extend([
+            f"## Clinical Trial Evidence ({len(drugs_with_trials)} drugs with keloid/scar trials)",
+            f"",
+            f"These candidates have existing or completed trials on ClinicalTrials.gov for keloid or hypertrophic scar.",
+            f"",
+            f"| Drug | Tier | Score | # Trials | Phases | Status |",
+            f"|------|------|-------|----------|--------|--------|",
+        ])
+        for s in drugs_with_trials:
+            trials = s["clinical_trials"]
+            tier_tag = f"[{TIER_EMOJI.get(s.get('severity_tier', 'unclassified'), '?')}]"
+            phases = ", ".join(sorted(set(t["phase"] for t in trials)))
+            statuses = ", ".join(sorted(set(t["status"] for t in trials)))
+            lines.append(
+                f"| {s['drug_name']} | {tier_tag} | {s['composite_score']:.4f} | "
+                f"{len(trials)} | {phases} | {statuses} |"
+            )
+        lines.extend([""])
+
+        # List individual trials
+        for s in drugs_with_trials:
+            lines.append(f"**{s['drug_name']}:**")
+            for t in s["clinical_trials"]:
+                status_str = t['status'].replace('_', ' ').title()
+                lines.append(
+                    f"- [{t['nct_id']}](https://clinicaltrials.gov/study/{t['nct_id']}) — "
+                    f"{t['title']} ({t['phase']}, {status_str})"
+                )
+            lines.append("")
+
+        lines.extend(["---", ""])
+
     # Full top N (all tiers)
     lines.extend([
         f"## All Top {min(top_n, len(scores))} Candidates (any tier)",
@@ -134,6 +169,18 @@ def generate_report(scores, top_n=20):
             if ot_details:
                 lines.append(f"")
                 lines.append(f"*Plus {len(ot_details)} additional OpenTargets gene associations (low confidence, omitted for clarity)*")
+
+        # Show trial info if available
+        drug_trials = s.get("clinical_trials", [])
+        if drug_trials:
+            lines.append("")
+            lines.append(f"**Clinical trials ({len(drug_trials)}):**")
+            for t in drug_trials:
+                status_str = t['status'].replace('_', ' ').title()
+                lines.append(
+                    f"- [{t['nct_id']}](https://clinicaltrials.gov/study/{t['nct_id']}) — "
+                    f"{t['title']} ({t['phase']}, {status_str})"
+                )
 
         lines.extend([
             "",

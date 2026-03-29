@@ -1,0 +1,107 @@
+{
+  "studies": [
+    {
+      "protocolSection": {
+        "identificationModule": {
+          "nctId": "NCT04049552",
+          "briefTitle": "RAPA-Keloid Study of Keloid Regression"
+        },
+        "statusModule": {
+          "overallStatus": "COMPLETED",
+          "startDateStruct": {
+            "date": "2020-01-24"
+          }
+        },
+        "conditionsModule": {
+          "conditions": ["Keloid"]
+        },
+        "designModule": {
+          "phases": ["EARLY_PHASE1"]
+        },
+        "armsInterventionsModule": {
+          "interventions": [
+            {"name": "Rapamycin 8% Ointment"},
+            {"name": "Placebo"}
+          ]
+        }
+      }
+    },
+    {
+      "protocolSection": {
+        "identificationModule": {
+          "nctId": "NCT00000001",
+          "briefTitle": "Study of Imatinib in Keloid Treatment"
+        },
+        "statusModule": {
+          "overallStatus": "RECRUITING",
+          "startDateStruct": {
+            "date": "2024-06-01"
+          }
+        },
+        "conditionsModule": {
+          "conditions": ["Keloid", "Hypertrophic Scar"]
+        },
+        "designModule": {
+          "phases": ["PHASE2"]
+        },
+        "armsInterventionsModule": {
+          "interventions": [
+            {"name": "Imatinib Mesylate 400mg"}
+          ]
+        }
+      }
+    },
+    {
+      "protocolSection": {
+        "identificationModule": {
+          "nctId": "NCT00000002",
+          "briefTitle": "Verapamil Injection for Keloid Prevention"
+        },
+        "statusModule": {
+          "overallStatus": "COMPLETED",
+          "startDateStruct": {
+            "date": "2018-03-15"
+          }
+        },
+        "conditionsModule": {
+          "conditions": ["Keloid"]
+        },
+        "designModule": {
+          "phases": ["PHASE3"]
+        },
+        "armsInterventionsModule": {
+          "interventions": [
+            {"name": "Verapamil Hydrochloride"},
+            {"name": "Triamcinolone Acetonide"}
+          ]
+        }
+      }
+    },
+    {
+      "protocolSection": {
+        "identificationModule": {
+          "nctId": "NCT00000003",
+          "briefTitle": "Unrelated Drug for Unrelated Condition"
+        },
+        "statusModule": {
+          "overallStatus": "COMPLETED",
+          "startDateStruct": {
+            "date": "2015-01-01"
+          }
+        },
+        "conditionsModule": {
+          "conditions": ["Hypertrophic Scar"]
+        },
+        "designModule": {
+          "phases": ["PHASE2"]
+        },
+        "armsInterventionsModule": {
+          "interventions": [
+            {"name": "MYSTERY COMPOUND XYZ"}
+          ]
+        }
+      }
+    }
+  ],
+  "totalCount": 4
+}
