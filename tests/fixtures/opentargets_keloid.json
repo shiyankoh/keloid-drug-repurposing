@@ -1,0 +1,47 @@
+{
+  "data": {
+    "disease": {
+      "id": "EFO_0004212",
+      "name": "Keloid",
+      "associatedTargets": {
+        "count": 5,
+        "rows": [
+          {
+            "target": {
+              "id": "ENSG00000174307",
+              "approvedSymbol": "PHLDA3",
+              "approvedName": "pleckstrin homology like domain family A member 3"
+            },
+            "score": 0.52,
+            "datatypeScores": [
+              {"id": "genetic_association", "score": 0.86}
+            ]
+          },
+          {
+            "target": {
+              "id": "ENSG00000069869",
+              "approvedSymbol": "NEDD4",
+              "approvedName": "NEDD4 E3 ubiquitin protein ligase"
+            },
+            "score": 0.49,
+            "datatypeScores": [
+              {"id": "literature", "score": 0.54},
+              {"id": "genetic_association", "score": 0.78}
+            ]
+          },
+          {
+            "target": {
+              "id": "ENSG00000105329",
+              "approvedSymbol": "TGFB1",
+              "approvedName": "transforming growth factor beta 1"
+            },
+            "score": 0.35,
+            "datatypeScores": [
+              {"id": "literature", "score": 0.70}
+            ]
+          }
+        ]
+      }
+    }
+  }
+}
