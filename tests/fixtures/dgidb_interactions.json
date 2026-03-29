@@ -1,0 +1,73 @@
+{
+  "data": {
+    "genes": {
+      "nodes": [
+        {
+          "name": "MTOR",
+          "longName": "mechanistic target of rapamycin kinase",
+          "interactions": [
+            {
+              "drug": {
+                "name": "EVEROLIMUS",
+                "approved": true,
+                "conceptId": "rxcui:141704"
+              },
+              "interactionScore": 0.21,
+              "interactionTypes": [
+                {"type": "inhibitor", "directionality": "INHIBITORY"}
+              ]
+            },
+            {
+              "drug": {
+                "name": "SIROLIMUS",
+                "approved": true,
+                "conceptId": "rxcui:35302"
+              },
+              "interactionScore": 0.09,
+              "interactionTypes": [
+                {"type": "inhibitor", "directionality": "INHIBITORY"}
+              ]
+            },
+            {
+              "drug": {
+                "name": "VISTUSERTIB",
+                "approved": false,
+                "conceptId": "ncit:C88329"
+              },
+              "interactionScore": 0.09,
+              "interactionTypes": [
+                {"type": "inhibitor", "directionality": "INHIBITORY"}
+              ]
+            }
+          ]
+        },
+        {
+          "name": "EGFR",
+          "longName": "epidermal growth factor receptor",
+          "interactions": [
+            {
+              "drug": {
+                "name": "ERLOTINIB",
+                "approved": true,
+                "conceptId": "rxcui:337535"
+              },
+              "interactionScore": 0.15,
+              "interactionTypes": [
+                {"type": "inhibitor", "directionality": "INHIBITORY"}
+              ]
+            },
+            {
+              "drug": {
+                "name": "EVEROLIMUS",
+                "approved": true,
+                "conceptId": "rxcui:141704"
+              },
+              "interactionScore": 0.05,
+              "interactionTypes": []
+            }
+          ]
+        }
+      ]
+    }
+  }
+}
