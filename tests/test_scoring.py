@@ -66,6 +66,32 @@ def populated_db(db_conn):
         "INSERT INTO drug_targets (drug_id, gene_symbol, action_type, source) VALUES (4, 'JAK2', 'inhibitor', 'DGIdb')"
     )
 
+    # Drug E: hits 2 curated pathways + 3 OpenTargets_association genes
+    # Should count as 2 pathways (not 3) for pathway_overlap_count
+    db_conn.execute(
+        "INSERT INTO drugs (id, drug_name, generic_name, approval_status) VALUES (5, 'DRUG_E', 'drug_e', 'approved')"
+    )
+    # Add some OpenTargets_association targets
+    db_conn.executemany(
+        """INSERT INTO keloid_targets (gene_symbol, target_name, pathway, evidence_type, evidence_strength, source)
+           VALUES (?, ?, ?, ?, ?, ?)""",
+        [
+            ("FLT3", "FLT3", "OpenTargets_association", "computed", 0.07, "opentargets"),
+            ("KIT", "KIT", "OpenTargets_association", "computed", 0.08, "opentargets"),
+            ("BRAF", "BRAF", "OpenTargets_association", "computed", 0.07, "opentargets"),
+        ],
+    )
+    db_conn.executemany(
+        "INSERT INTO drug_targets (drug_id, gene_symbol, action_type, source) VALUES (?, ?, ?, ?)",
+        [
+            (5, "MTOR", "inhibitor", "DGIdb"),      # PI3K/AKT/mTOR (curated)
+            (5, "EGFR", "inhibitor", "DGIdb"),       # EGFR (curated)
+            (5, "FLT3", "inhibitor", "DGIdb"),       # OpenTargets_association
+            (5, "KIT", "inhibitor", "DGIdb"),        # OpenTargets_association
+            (5, "BRAF", "inhibitor", "DGIdb"),       # OpenTargets_association
+        ],
+    )
+
     db_conn.commit()
     return db_conn
 
@@ -74,7 +100,7 @@ class TestQueryOverlaps:
     def test_returns_all_matching_drugs(self, populated_db):
         overlaps = query_overlaps(populated_db)
         drug_names = set(o["drug_name"] for o in overlaps)
-        assert drug_names == {"DRUG_A", "DRUG_B", "DRUG_C", "DRUG_D"}
+        assert drug_names == {"DRUG_A", "DRUG_B", "DRUG_C", "DRUG_D", "DRUG_E"}
 
     def test_drug_a_has_three_overlaps(self, populated_db):
         overlaps = query_overlaps(populated_db)
@@ -131,6 +157,39 @@ class TestComputeScores:
         scores = compute_scores(overlaps)
         drug_d = [s for s in scores if s["drug_name"] == "DRUG_D"][0]
         assert drug_d["avg_evidence_strength"] == 0.5
+
+    def test_opentargets_association_excluded_from_pathway_count(self, populated_db):
+        """Drug E hits 2 curated pathways + 3 OpenTargets_association genes.
+        pathway_overlap_count should be 2 (only curated pathways count)."""
+        overlaps = query_overlaps(populated_db)
+        scores = compute_scores(overlaps)
+        drug_e = [s for s in scores if s["drug_name"] == "DRUG_E"][0]
+        assert drug_e["pathway_overlap_count"] == 2
+
+    def test_opentargets_genes_still_in_evidence_avg(self, populated_db):
+        """OpenTargets genes should still contribute to avg_evidence_strength
+        even though they don't count toward pathway_overlap_count."""
+        overlaps = query_overlaps(populated_db)
+        scores = compute_scores(overlaps)
+        drug_e = [s for s in scores if s["drug_name"] == "DRUG_E"][0]
+        # MTOR=0.7, EGFR=0.8, FLT3=0.07, KIT=0.08, BRAF=0.07 → avg ≈ 0.344
+        assert drug_e["avg_evidence_strength"] == pytest.approx(0.344, abs=0.001)
+
+    def test_opentargets_only_drug_gets_zero_pathway_count(self, populated_db):
+        """A drug that ONLY hits OpenTargets_association genes should have
+        pathway_overlap_count = 0 and no multi-target bonus."""
+        populated_db.execute(
+            "INSERT INTO drugs (id, drug_name, generic_name, approval_status) VALUES (6, 'DRUG_F', 'drug_f', 'approved')"
+        )
+        populated_db.execute(
+            "INSERT INTO drug_targets (drug_id, gene_symbol, action_type, source) VALUES (6, 'FLT3', 'inhibitor', 'DGIdb')"
+        )
+        populated_db.commit()
+        overlaps = query_overlaps(populated_db)
+        scores = compute_scores(overlaps)
+        drug_f = [s for s in scores if s["drug_name"] == "DRUG_F"][0]
+        assert drug_f["pathway_overlap_count"] == 0
+        assert drug_f["multi_target_bonus"] == 0.0
 
 
 class TestNormalizeOverlapCounts:

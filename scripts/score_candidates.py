@@ -10,6 +10,7 @@ W_OVERLAP = 0.40
 W_EVIDENCE = 0.40
 W_MULTITARGET = 0.20
 MULTI_TARGET_THRESHOLD = 3
+UNCURATED_PATHWAY = "OpenTargets_association"
 
 
 def query_overlaps(conn):
@@ -67,7 +68,8 @@ def compute_scores(overlaps):
 
     scores = []
     for name, data in drug_data.items():
-        pathway_count = len(data["pathways"])
+        curated_pathways = {p for p in data["pathways"] if p != UNCURATED_PATHWAY}
+        pathway_count = len(curated_pathways)
         avg_evidence = sum(data["evidence_values"]) / len(data["evidence_values"])
         multi_bonus = 1.0 if pathway_count >= MULTI_TARGET_THRESHOLD else 0.0
 
