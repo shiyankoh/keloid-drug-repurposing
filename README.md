@@ -78,7 +78,7 @@ This pipeline is loosely modeled on [David Fajgenbaum's computational pharmacoph
 
 ## Feedback welcome
 
-If you're a dermatologist, computational biologist, or anyone who works on keloids — I'd love your thoughts on the approach, the candidate list, or the experiment design. Reach out at shiyan@hustlefund.vc.
+If you're a dermatologist, computational biologist, or anyone who works on keloids — I'd love your thoughts on the approach, the candidate list, or the experiment design. Reach out at keloid-research@agentmail.to.
 
 ## License
 
