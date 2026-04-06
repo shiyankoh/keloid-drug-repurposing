@@ -13,6 +13,9 @@ python3 -m scripts.03_score_candidates
 echo "=== Step 4: Cross-referencing clinical trials ==="
 python3 -m scripts.05_clinical_trials
 
+echo "=== Step 6: Structural docking (may take hours on first run) ==="
+python3 -m scripts.06_structural_docking
+
 echo "=== Step 5: Generating report ==="
 python3 -m scripts.04_generate_report
 

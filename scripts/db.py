@@ -46,5 +46,41 @@ def init_db(conn):
             source TEXT NOT NULL,
             created_at TEXT DEFAULT (datetime('now'))
         );
+
+        CREATE TABLE IF NOT EXISTS protein_structures (
+            id INTEGER PRIMARY KEY,
+            gene_symbol TEXT NOT NULL,
+            pdb_id TEXT,
+            alphafold_id TEXT,
+            structure_source TEXT NOT NULL,
+            resolution_angstroms REAL,
+            binding_site_center_x REAL,
+            binding_site_center_y REAL,
+            binding_site_center_z REAL,
+            binding_site_size REAL DEFAULT 22.0,
+            file_path TEXT NOT NULL,
+            created_at TEXT DEFAULT (datetime('now'))
+        );
+
+        CREATE TABLE IF NOT EXISTS drug_structures (
+            id INTEGER PRIMARY KEY,
+            drug_name TEXT NOT NULL,
+            pubchem_cid TEXT,
+            smiles TEXT,
+            sdf_path TEXT,
+            pdbqt_path TEXT,
+            created_at TEXT DEFAULT (datetime('now'))
+        );
+
+        CREATE TABLE IF NOT EXISTS docking_results (
+            id INTEGER PRIMARY KEY,
+            drug_structure_id INTEGER NOT NULL REFERENCES drug_structures(id),
+            protein_structure_id INTEGER NOT NULL REFERENCES protein_structures(id),
+            method TEXT NOT NULL DEFAULT 'vina',
+            binding_energy_kcal REAL,
+            num_poses INTEGER,
+            best_pose_path TEXT,
+            created_at TEXT DEFAULT (datetime('now'))
+        );
     """)
     conn.commit()

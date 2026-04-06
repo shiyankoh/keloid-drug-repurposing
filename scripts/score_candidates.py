@@ -13,6 +13,12 @@ SEVERITY_CSV = os.path.join(os.path.dirname(__file__), "..", "data", "severity_t
 W_OVERLAP = 0.40
 W_EVIDENCE = 0.40
 W_MULTITARGET = 0.20
+
+# Updated weights when structural data is available
+W_OVERLAP_STRUCTURAL = 0.30
+W_EVIDENCE_STRUCTURAL = 0.30
+W_STRUCTURAL = 0.25
+W_MULTITARGET_STRUCTURAL = 0.15
 MULTI_TARGET_THRESHOLD = 3
 UNCURATED_PATHWAY = "OpenTargets_association"
 
@@ -101,6 +107,58 @@ def compute_scores(overlaps):
 
     scores.sort(key=lambda s: s["composite_score"], reverse=True)
     return scores
+
+
+def compute_structural_binding_score(binding_energy_kcal):
+    """Convert Vina binding energy to a 0.0-1.0 score.
+    Scale: -10 kcal/mol -> 1.0, -3 kcal/mol -> 0.0.
+    More negative = stronger binding = higher score."""
+    if binding_energy_kcal is None:
+        return 0.0
+    clamped = max(-10.0, min(-3.0, binding_energy_kcal))
+    return round((clamped - (-3.0)) / (-10.0 - (-3.0)), 4)
+
+
+def add_structural_scores(conn, scores):
+    """Look up docking results and add structural_binding_score to each drug score.
+    Uses the best (most negative) binding energy across all targets for each drug."""
+    cursor = conn.execute("""
+        SELECT ds.drug_name, MIN(dr.binding_energy_kcal) as best_energy
+        FROM docking_results dr
+        JOIN drug_structures ds ON dr.drug_structure_id = ds.id
+        GROUP BY ds.drug_name
+    """)
+    docking_data = {row["drug_name"]: row["best_energy"] for row in cursor.fetchall()}
+
+    for s in scores:
+        energy = docking_data.get(s["drug_name"])
+        s["best_binding_energy"] = energy
+        s["structural_binding_score"] = compute_structural_binding_score(energy)
+
+    return scores
+
+
+def recompute_with_structural(scores):
+    """Recompute composite scores incorporating structural binding data.
+    Only reweights drugs that have docking results."""
+    has_structural = [s for s in scores if s.get("structural_binding_score", 0) > 0]
+    no_structural = [s for s in scores if s.get("structural_binding_score", 0) == 0]
+
+    if has_structural:
+        max_overlap = max(s["pathway_overlap_count"] for s in has_structural) or 1
+        for s in has_structural:
+            norm_overlap = s["pathway_overlap_count"] / max_overlap
+            s["composite_score"] = round(
+                norm_overlap * W_OVERLAP_STRUCTURAL
+                + s["avg_evidence_strength"] * W_EVIDENCE_STRUCTURAL
+                + s["structural_binding_score"] * W_STRUCTURAL
+                + s["multi_target_bonus"] * W_MULTITARGET_STRUCTURAL,
+                4,
+            )
+
+    all_scores = has_structural + no_structural
+    all_scores.sort(key=lambda s: s["composite_score"], reverse=True)
+    return all_scores
 
 
 def load_severity_tiers(csv_path=None):
