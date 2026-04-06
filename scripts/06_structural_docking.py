@@ -58,7 +58,11 @@ def run_all_docking(conn):
     for pair in pairs:
         # Need PDBQT for protein
         protein_pdb = pair["protein_pdb"]
-        protein_pdbqt = protein_pdb.replace("_clean.pdb", "_clean.pdbqt").replace(".pdb", ".pdbqt")
+        # Replace .pdb extension with .pdbqt (handles both _clean.pdb and .pdb)
+        if protein_pdb.endswith(".pdb"):
+            protein_pdbqt = protein_pdb[:-4] + ".pdbqt"
+        else:
+            protein_pdbqt = protein_pdb + ".pdbqt"
         if not os.path.exists(protein_pdbqt):
             logger.warning(f"Protein PDBQT missing for {pair['gene_symbol']}")
             continue
