@@ -239,3 +239,86 @@ class TestNormalizeOverlapCounts:
 
     def test_empty_list(self):
         assert normalize_overlap_counts([]) == []
+
+
+class TestStructuralScoreIntegration:
+    def test_compute_structural_binding_score_strong_binder(self):
+        """Energy < -7.0 should produce a high structural score."""
+        from scripts.score_candidates import compute_structural_binding_score
+        score = compute_structural_binding_score(-8.5)
+        assert score > 0.7
+
+    def test_compute_structural_binding_score_weak_binder(self):
+        """Energy > -5.0 should produce a low structural score."""
+        from scripts.score_candidates import compute_structural_binding_score
+        score = compute_structural_binding_score(-4.0)
+        assert score < 0.3
+
+    def test_compute_structural_binding_score_none(self):
+        """No docking data should return 0."""
+        from scripts.score_candidates import compute_structural_binding_score
+        score = compute_structural_binding_score(None)
+        assert score == 0.0
+
+    def test_compute_structural_binding_score_very_strong(self):
+        """Energy of -10 should give score of 1.0."""
+        from scripts.score_candidates import compute_structural_binding_score
+        score = compute_structural_binding_score(-10.0)
+        assert score == 1.0
+
+    def test_compute_structural_binding_score_clamped_above(self):
+        """Energy above -3 should clamp to 0.0."""
+        from scripts.score_candidates import compute_structural_binding_score
+        score = compute_structural_binding_score(-2.0)
+        assert score == 0.0
+
+    def test_add_structural_scores(self, populated_db):
+        """When structural data exists, add_structural_scores should populate fields."""
+        from scripts.score_candidates import query_overlaps, compute_scores, add_structural_scores
+        init_db(populated_db)
+
+        # Add structural data for DRUG_A targeting EGFR
+        populated_db.execute(
+            """INSERT INTO protein_structures (id, gene_symbol, pdb_id, structure_source, file_path)
+               VALUES (1, 'EGFR', '1M17', 'pdb_experimental', 'p.pdb')"""
+        )
+        populated_db.execute(
+            """INSERT INTO drug_structures (id, drug_name, pubchem_cid, smiles, sdf_path, pdbqt_path)
+               VALUES (1, 'DRUG_A', '123', 'C', 'l.sdf', 'l.pdbqt')"""
+        )
+        populated_db.execute(
+            """INSERT INTO docking_results (drug_structure_id, protein_structure_id, method, binding_energy_kcal, num_poses)
+               VALUES (1, 1, 'vina', -8.5, 5)"""
+        )
+        populated_db.commit()
+
+        overlaps = query_overlaps(populated_db)
+        scores = compute_scores(overlaps)
+        scores = add_structural_scores(populated_db, scores)
+
+        drug_a = [s for s in scores if s["drug_name"] == "DRUG_A"][0]
+        assert "structural_binding_score" in drug_a
+        assert drug_a["structural_binding_score"] > 0.0
+        assert drug_a["best_binding_energy"] == -8.5
+
+    def test_recompute_with_structural(self):
+        """Drugs with structural data should get reweighted scores."""
+        from scripts.score_candidates import recompute_with_structural
+        scores = [
+            {
+                "drug_name": "A", "pathway_overlap_count": 3,
+                "avg_evidence_strength": 0.7, "multi_target_bonus": 1.0,
+                "structural_binding_score": 0.8, "composite_score": 0.5,
+            },
+            {
+                "drug_name": "B", "pathway_overlap_count": 1,
+                "avg_evidence_strength": 0.5, "multi_target_bonus": 0.0,
+                "structural_binding_score": 0, "composite_score": 0.3,
+            },
+        ]
+        result = recompute_with_structural(scores)
+        # Drug A should have a recomputed score, Drug B unchanged
+        drug_a = [s for s in result if s["drug_name"] == "A"][0]
+        drug_b = [s for s in result if s["drug_name"] == "B"][0]
+        assert drug_a["composite_score"] != 0.5  # recomputed
+        assert drug_b["composite_score"] == 0.3  # unchanged
