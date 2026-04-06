@@ -14,12 +14,25 @@ Tests import from the core module. Pipeline runner uses `python3 -m scripts.0N_f
 
 ```bash
 ./run_pipeline.sh          # full pipeline
-python3 -m pytest tests/ -v  # 57 tests
+source venv/bin/activate      # activate venv first
+python3 -m pytest tests/ -v  # 118 tests
 ```
 
 ## Database
 
-SQLite at `data/keloid.db`. 3 tables: `keloid_targets`, `drugs`, `drug_targets`. Join key: `gene_symbol` (HGNC standard).
+SQLite at `data/keloid.db`. 6 tables: `keloid_targets`, `drugs`, `drug_targets`, `protein_structures`, `drug_structures`, `docking_results`. Join key: `gene_symbol` (HGNC standard).
+
+## Structural Docking (Stage 06)
+
+New modules for protein-drug molecular docking:
+- `scripts/protein_structures.py` — fetch PDB/AlphaFold protein structures
+- `scripts/drug_structures.py` — fetch PubChem drug structures, convert to PDBQT
+- `scripts/protein_prep.py` — clean PDB files, find binding sites
+- `scripts/docking.py` — run AutoDock Vina, parse results
+
+Requires: `brew install open-babel`, Vina binary at `~/bin/vina`, Python venv with `requests` + `pytest`.
+
+Docking is CPU-intensive (~2-10 min per pair). Full batch of ~60 pairs takes hours.
 
 ## Scoring note
 
