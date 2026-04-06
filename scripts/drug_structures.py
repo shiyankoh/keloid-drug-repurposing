@@ -141,7 +141,9 @@ def get_smiles(cid: int) -> str | None:
         return None
 
     try:
-        return data["PropertyTable"]["Properties"][0]["CanonicalSMILES"]
+        props = data["PropertyTable"]["Properties"][0]
+        # PubChem returns either CanonicalSMILES or ConnectivitySMILES
+        return props.get("CanonicalSMILES") or props.get("ConnectivitySMILES")
     except (KeyError, IndexError, TypeError):
         logger.warning(f"Unexpected SMILES response shape for CID {cid}")
         return None

@@ -72,15 +72,21 @@ def parse_vina_output(stdout_text: str) -> dict:
     if not stdout_text:
         return {"best_energy": None, "num_poses": 0}
 
-    pattern = re.compile(r"\s+\d+\s+([-\d.]+)\s+")
-    matches = pattern.findall(stdout_text)
+    # Match result table lines like "   1       -8.300      0.000      0.000"
+    # Use re.match (anchored to line start) to avoid matching progress bar numbers
+    pattern = re.compile(r"\s+(\d+)\s+([-\d.]+)\s+[-\d.]+\s+[-\d.]+")
+    energies = []
+    for line in stdout_text.split("\n"):
+        match = pattern.match(line)
+        if match:
+            energies.append(float(match.group(2)))
 
-    if not matches:
+    if not energies:
         return {"best_energy": None, "num_poses": 0}
 
     return {
-        "best_energy": float(matches[0]),
-        "num_poses": len(matches),
+        "best_energy": energies[0],
+        "num_poses": len(energies),
     }
 
 
