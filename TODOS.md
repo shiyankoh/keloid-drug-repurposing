@@ -36,6 +36,32 @@ Completed 2026-03-29. See `data/severity_tiers.csv`. Top 50 drugs classified as 
 
 ---
 
+## Known Limitations (Clinical Review)
+
+The following limitations were flagged by a physician reviewing the pipeline output. These aren't bugs — they're fundamental gaps in the computational approach that should inform how results are interpreted and what future work could address.
+
+### 1. Molecular interaction directionality ignored
+
+Inhibitors, activators, and partial agonists are treated equally. A drug that activates a keloid-promoting pathway is scored the same as one that inhibits it. Worse, some drugs have tissue-specific effects — e.g., tamoxifen suppresses estrogen in breast tissue but activates it in endometrial tissue. The pipeline has no way to distinguish "hits the pathway" from "hits the pathway in the right direction in skin fibroblasts."
+
+### 2. Route of delivery and pharmacokinetics not modeled
+
+Topical, intralesional, and systemic delivery have very different efficacy and side-effect profiles. Intralesional steroids work well for keloids; systemic steroids would be inappropriate. The pipeline treats all drugs as if route doesn't matter, which overstates the viability of some candidates and understates others.
+
+### 3. Effect size and pathway importance not weighted
+
+All pathways are treated equally, but clinically some targets matter far more than others for keloids. Keloids are likely driven primarily by pro-inflammatory processes (which is why intralesional steroids work and why so many anti-inflammatory drugs score highly). mTOR, for example, is strongly implicated in vascular malformations but probably plays a minor role in keloid pathogenesis. The pipeline rewards breadth of pathway coverage rather than depth on the pathways that actually drive keloid biology.
+
+### 4. Mechanobiology ignored
+
+From a surgical perspective, mechanical tension and scar placement are the biggest factors in keloid prevention and the basis of scar revision. Silicone taping works because it modifies tension, not because of a molecular pathway. Drug delivery mechanisms (microneedling, intralesional depots) that exploit mechanical properties aren't captured. This is a fundamentally different treatment axis that a molecular pipeline can't model.
+
+### 5. Wound healing temporal dynamics not captured
+
+Keloid formation is time-dependent and occurs in discrete phases. Different therapies are indicated at different phases (acute inflammation, proliferation, remodeling). The pipeline treats keloid formation as a static state rather than a process, so it can't distinguish drugs that should be used early (to prevent keloid formation) from those that address established keloids.
+
+---
+
 ## Every Cure MeDIC Database Check
 
 **What:** Search Every Cure's open-source MeDIC database for keloid or fibrosis entries.
