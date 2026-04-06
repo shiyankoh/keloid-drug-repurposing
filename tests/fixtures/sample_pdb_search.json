@@ -1,0 +1,10 @@
+{
+  "query_id": "abc123",
+  "result_type": "entry",
+  "total_count": 3,
+  "result_set": [
+    {"identifier": "1IVO", "score": 1.0},
+    {"identifier": "2GS6", "score": 0.95},
+    {"identifier": "3VJN", "score": 0.90}
+  ]
+}
