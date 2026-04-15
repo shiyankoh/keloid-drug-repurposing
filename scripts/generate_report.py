@@ -18,6 +18,13 @@ TIER_LABELS = {
     "unclassified": "Not yet classified",
 }
 
+DIRECTION_LABELS = {
+    "favorable": "[+]",
+    "unfavorable": "[!]",
+    "mixed": "[~]",
+    "unknown": "[?]",
+}
+
 TIER_EMOJI = {
     "green": "G",
     "yellow": "Y",
@@ -49,6 +56,10 @@ def generate_report(scores, top_n=20):
         f"[R] Red = high risk, oncology-grade toxicity | "
         f"[?] Unclassified",
         f"",
+        f"**Directionality:** [+] Favorable = inhibits pro-keloid genes | "
+        f"[!] Unfavorable = activates pro-keloid genes | "
+        f"[~] Mixed | [?] Not yet annotated",
+        f"",
         f"> This is a hypothesis generator, not medical advice. Discuss any candidate with a dermatologist before use.",
         f"",
         f"---",
@@ -62,8 +73,8 @@ def generate_report(scores, top_n=20):
         f"These drugs have green/yellow safety profiles AND hit 2+ curated keloid pathways.",
         f"Sorted by composite score.",
         f"",
-        f"| Rank | Drug | Score | Pathways | Avg Evidence | Tier | Safety Notes |",
-        f"|------|------|-------|----------|-------------|------|-------------|",
+        f"| Rank | Drug | Score | Pathways | Avg Evidence | Tier | Direction | Safety Notes |",
+        f"|------|------|-------|----------|-------------|------|-----------|-------------|",
     ])
 
     for i, s in enumerate(actionable, 1):
@@ -72,10 +83,11 @@ def generate_report(scores, top_n=20):
         notes = s.get("severity_notes", "")
         # Truncate notes for table
         short_notes = notes[:60] + "..." if len(notes) > 60 else notes
+        direction = DIRECTION_LABELS.get(s.get("directionality_flag", "unknown"), "[?]")
         lines.append(
             f"| {i} | {s['drug_name']} | {s['composite_score']:.4f} | "
             f"{s['pathway_overlap_count']} | {s['avg_evidence_strength']:.4f} | "
-            f"{tier_tag} | {short_notes} |"
+            f"{tier_tag} | {direction} | {short_notes} |"
         )
 
     lines.extend(["", "---", ""])
@@ -146,6 +158,16 @@ def generate_report(scores, top_n=20):
         lines.append("")
         if s.get("severity_notes"):
             lines.append(f"**Safety:** {s['severity_notes']}")
+        dir_flag = s.get("directionality_flag", "unknown")
+        dir_detail = (
+            "all known interactions inhibit pro-keloid genes"
+            if dir_flag == "favorable"
+            else "see docs/directionality/ for detail"
+        )
+        lines.append(
+            f"**Directionality:** {DIRECTION_LABELS.get(dir_flag, '[?]')} "
+            f"{dir_flag.capitalize()} — {dir_detail}"
+        )
         if s.get("original_indication"):
             lines.append(f"**Approved for:** {s['original_indication']}")
         if s.get("mechanism_of_action"):
