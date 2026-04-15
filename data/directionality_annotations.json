@@ -108,5 +108,45 @@
     "keloid_target_role": "pro_keloid",
     "net_effect": "beneficial",
     "notes": "Imatinib mediates antineoplastic effects via Wnt/β-catenin in anaplastic thyroid cancer. Wnt/β-catenin is targetable in GIST context. Relevance to keloid fibroblasts is uncertain — evidence is cancer-specific."
+  },
+  {
+    "drug_name": "CELECOXIB",
+    "gene_symbol": "STAT3",
+    "action_direction": "inhibitor",
+    "confidence": "medium",
+    "source": "PubMed:17052991, PubMed:16707460",
+    "keloid_target_role": "pro_keloid",
+    "net_effect": "beneficial",
+    "notes": "COX-2-independent inhibition of STAT3 phosphorylation. Celecoxib directly inhibits STAT3 activation at concentrations achievable in vivo, demonstrated in glioblastoma and HNSCC models."
+  },
+  {
+    "drug_name": "CELECOXIB",
+    "gene_symbol": "PIK3CA",
+    "action_direction": "inhibitor",
+    "confidence": "medium",
+    "source": "PubMed:15623620, PubMed:17145890",
+    "keloid_target_role": "pro_keloid",
+    "net_effect": "beneficial",
+    "notes": "Celecoxib suppresses PI3K/AKT signaling in multiple cancer models. Some evidence suggests COX-2-independent mechanism via direct PDK1 inhibition upstream of AKT."
+  },
+  {
+    "drug_name": "CELECOXIB",
+    "gene_symbol": "VEGFA",
+    "action_direction": "inhibitor",
+    "confidence": "medium",
+    "source": "PubMed:12438237, PubMed:15956284",
+    "keloid_target_role": "pro_keloid",
+    "net_effect": "beneficial",
+    "notes": "COX-2 inhibition reduces PGE2-mediated VEGF induction. Celecoxib decreases VEGF expression in tumor and endothelial cells. Well-documented anti-angiogenic property of COX-2 inhibitors."
+  },
+  {
+    "drug_name": "CELECOXIB",
+    "gene_symbol": "CTNNB1",
+    "action_direction": "inhibitor",
+    "confidence": "medium",
+    "source": "PubMed:16166264, PubMed:15767574",
+    "keloid_target_role": "pro_keloid",
+    "net_effect": "beneficial",
+    "notes": "Celecoxib downregulates Wnt/β-catenin signaling in colorectal cancer models. Reduces nuclear β-catenin accumulation and TCF/LEF transcriptional activity, partially independent of COX-2 inhibition."
   }
 ]

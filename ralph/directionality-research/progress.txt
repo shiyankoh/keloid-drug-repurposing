@@ -59,3 +59,17 @@ Started: Wed 15 Apr 2026 23:09:33 +08
   - Imatinib's anti-fibrotic mechanism via c-Abl → TGF-β crosstalk is well-established in literature even though it's not listed in ChEMBL mechanisms
   - When a drug clearly does NOT target a gene (e.g., imatinib vs EGFR), use 'unknown' rather than forcing an indirect connection
 ---
+
+## 2026-04-15 - US-005
+- Researched CELECOXIB directionality against STAT3, PIK3CA, VEGFA, CTNNB1
+- ChEMBL ID: CHEMBL118, primary mechanism: COX-2 (PTGS2) inhibitor — no matches for our gene list
+- STAT3: inhibitor (medium confidence) — COX-2-independent direct inhibition of STAT3 phosphorylation, well-documented
+- PIK3CA: inhibitor (medium confidence) — suppresses PI3K/AKT signaling, possibly via COX-2-independent PDK1 inhibition
+- VEGFA: inhibitor (medium confidence) — COX-2 inhibition reduces PGE2-mediated VEGF induction, well-documented anti-angiogenic effect
+- CTNNB1: inhibitor (medium confidence) — downregulates Wnt/β-catenin signaling, reduces nuclear β-catenin accumulation
+- Files changed: docs/directionality/CELECOXIB.md (created), data/directionality_annotations.json (4 entries added, total now 15)
+- **Learnings for future iterations:**
+  - Celecoxib has well-documented COX-2-independent effects (STAT3, PDK1/AKT) — don't assume all effects are downstream of COX-2 inhibition
+  - NSAIDs with off-target kinase/signaling effects can have medium confidence even though the primary mechanism doesn't match our gene list
+  - All 4 celecoxib targets are pro_keloid with inhibitor direction → all net_effect='beneficial'
+---
