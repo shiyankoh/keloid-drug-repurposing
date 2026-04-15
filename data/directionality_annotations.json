@@ -148,5 +148,35 @@
     "keloid_target_role": "pro_keloid",
     "net_effect": "beneficial",
     "notes": "Celecoxib downregulates Wnt/β-catenin signaling in colorectal cancer models. Reduces nuclear β-catenin accumulation and TCF/LEF transcriptional activity, partially independent of COX-2 inhibition."
+  },
+  {
+    "drug_name": "PEGINTERFERON ALFA-2B",
+    "gene_symbol": "EGFR",
+    "action_direction": "inhibitor",
+    "confidence": "low",
+    "source": "PubMed:2463199, PubMed:15662773",
+    "keloid_target_role": "pro_keloid",
+    "net_effect": "beneficial",
+    "notes": "IFN-α has anti-proliferative effects that include downregulation of EGFR expression and signaling. Evidence primarily from epidermoid carcinoma and other epithelial models; fibroblast-specific data is limited."
+  },
+  {
+    "drug_name": "PEGINTERFERON ALFA-2B",
+    "gene_symbol": "IL6",
+    "action_direction": "inhibitor",
+    "confidence": "low",
+    "source": "PubMed:18029348, PubMed:15908955",
+    "keloid_target_role": "pro_keloid",
+    "net_effect": "beneficial",
+    "notes": "IFN-α suppresses pro-inflammatory cytokine production including IL-6 in fibrotic contexts. Consistent with clinical anti-fibrotic use in keloids, though the effect is indirect via broad immunomodulation."
+  },
+  {
+    "drug_name": "PEGINTERFERON ALFA-2B",
+    "gene_symbol": "JAK2",
+    "action_direction": "activator",
+    "confidence": "medium",
+    "source": "PubMed:8530365, PubMed:16260494",
+    "keloid_target_role": "pro_keloid",
+    "net_effect": "unfavorable",
+    "notes": "Type I interferons signal through IFNAR → JAK-STAT pathway. While canonical signaling uses JAK1/TYK2, JAK2 associates with the IFNAR complex and is activated during type I IFN signaling. Activating a pro-keloid target is unfavorable."
   }
 ]
