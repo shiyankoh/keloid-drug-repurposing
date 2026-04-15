@@ -227,7 +227,7 @@
         "Write `docs/directionality/VALIDATION.md` summarizing counts, any 'unknown' pairs flagged, and overall completeness check"
       ],
       "priority": 14,
-      "passes": false,
+      "passes": true,
       "notes": ""
     }
   ]
