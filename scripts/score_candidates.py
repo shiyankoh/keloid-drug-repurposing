@@ -29,8 +29,9 @@ def query_overlaps(conn):
     cursor = conn.execute("""
         SELECT d.id as drug_id, d.drug_name, d.generic_name,
                d.original_indication, d.mechanism_of_action,
-               dt.gene_symbol, dt.action_type,
-               kt.pathway, kt.evidence_strength
+               dt.gene_symbol, dt.action_type, dt.action_direction,
+               kt.pathway, kt.evidence_strength,
+               kt.target_role
         FROM drugs d
         JOIN drug_targets dt ON d.id = dt.drug_id
         JOIN keloid_targets kt ON dt.gene_symbol = kt.gene_symbol
@@ -73,6 +74,8 @@ def compute_scores(overlaps):
             "gene_symbol": row["gene_symbol"],
             "pathway": row["pathway"],
             "action_type": row["action_type"],
+            "action_direction": row.get("action_direction"),
+            "keloid_target_role": row.get("target_role", "pro_keloid"),
             "evidence_strength": row["evidence_strength"],
         })
 
@@ -94,6 +97,7 @@ def compute_scores(overlaps):
             "multi_target_bonus": multi_bonus,
             "gene_details": data["gene_details"],
             "composite_score": 0.0,
+            "directionality_flag": compute_directionality_flag(data["gene_details"]),
         })
 
     scores = normalize_overlap_counts(scores)
@@ -191,6 +195,35 @@ def apply_severity_tiers(scores, tiers):
             s["severity_tier"] = "unclassified"
             s["severity_notes"] = ""
     return scores
+
+
+def compute_directionality_flag(gene_details):
+    """Determine overall directionality for a drug from its gene-level annotations.
+
+    Returns: 'favorable' | 'unfavorable' | 'mixed' | 'unknown'
+
+    A drug is favorable if all annotated interactions inhibit pro_keloid genes.
+    A drug is unfavorable if all annotated interactions activate pro_keloid genes.
+    Mixed if both occur. Unknown if no annotation data exists.
+    """
+    beneficial = 0
+    unfavorable = 0
+    for gd in gene_details:
+        direction = gd.get("action_direction")
+        role = gd.get("keloid_target_role", "pro_keloid")
+        if direction == "inhibitor" and role == "pro_keloid":
+            beneficial += 1
+        elif direction == "activator" and role == "pro_keloid":
+            unfavorable += 1
+        # context_dependent genes (e.g., TNF), modulator, unknown, None → skip
+
+    if beneficial == 0 and unfavorable == 0:
+        return "unknown"
+    if unfavorable == 0:
+        return "favorable"
+    if beneficial == 0:
+        return "unfavorable"
+    return "mixed"
 
 
 def main():
