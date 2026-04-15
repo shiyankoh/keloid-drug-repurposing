@@ -1,0 +1,30 @@
+# Ralph Progress Log
+Started: Wed 15 Apr 2026 23:09:33 +08
+
+## Codebase Patterns
+- ChEMBL API: resolve drug name via `molecule.json?pref_name=<NAME>`, then fetch mechanisms via `mechanism.json?molecule_chembl_id=<ID>`
+- ChEMBL primary targets often don't match our 22-gene list — especially for biologics and IMiDs. Fall back to PubMed for gene-specific directionality.
+- Annotations JSON is at Keloid project root: `data/directionality_annotations.json`, not in the ralph subdirectory
+- Research docs go in `docs/directionality/` at the Keloid project root
+- TNF is context_dependent, all other target genes are pro_keloid
+- Each JSON entry needs exactly 8 fields: drug_name, gene_symbol, action_direction, confidence, source, keloid_target_role, net_effect, notes
+
+---
+
+## 2026-04-15 - US-001
+- Already completed in prior iteration (commit fc7d924)
+- Created `docs/directionality/` directory and `data/directionality_annotations.json` with empty array
+- Marked as passes: true
+---
+
+## 2026-04-15 - US-002
+- Researched LENALIDOMIDE directionality against TNF, VEGFA, KDR, CTNNB1
+- ChEMBL ID: CHEMBL848, primary target is Cereblon (CRBN) — no direct matches for our genes
+- All 4 genes resolved via PubMed fallback as inhibitor actions
+- TNF marked net_effect='unclear' (context_dependent role)
+- Files changed: docs/directionality/LENALIDOMIDE.md (created), data/directionality_annotations.json (4 entries added)
+- **Learnings for future iterations:**
+  - Lenalidomide's primary ChEMBL mechanism is Cereblon E3 ubiquitin ligase inhibitor — all keloid-relevant gene effects are downstream/indirect
+  - PubMed searches work well with `<drug>+<gene>+mechanism` format
+  - KDR-specific searches may return zero results; try broader terms like `VEGFR+angiogenesis`
+---

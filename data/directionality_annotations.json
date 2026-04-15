@@ -1,1 +1,42 @@
-[]
+[
+  {
+    "drug_name": "LENALIDOMIDE",
+    "gene_symbol": "TNF",
+    "action_direction": "inhibitor",
+    "confidence": "high",
+    "source": "PubMed:16255679, PubMed:15571458",
+    "keloid_target_role": "context_dependent",
+    "net_effect": "unclear",
+    "notes": "Lenalidomide is a potent inhibitor of TNF-alpha production, a core IMiD property. TNF role in keloids is context-dependent (pro-proliferative via NF-kB but also induces MMPs), so net effect is unclear."
+  },
+  {
+    "drug_name": "LENALIDOMIDE",
+    "gene_symbol": "VEGFA",
+    "action_direction": "inhibitor",
+    "confidence": "medium",
+    "source": "PubMed:29693175",
+    "keloid_target_role": "pro_keloid",
+    "net_effect": "beneficial",
+    "notes": "Lenalidomide reduces VEGF expression in myeloma cell microvesicles, contributing to anti-angiogenic activity. Indirect effect via cereblon-mediated pathways."
+  },
+  {
+    "drug_name": "LENALIDOMIDE",
+    "gene_symbol": "KDR",
+    "action_direction": "inhibitor",
+    "confidence": "medium",
+    "source": "PubMed:21307145, PubMed:15618473",
+    "keloid_target_role": "pro_keloid",
+    "net_effect": "beneficial",
+    "notes": "Lenalidomide has antiangiogenic effects on endothelial cells and suppresses VEGF receptor signaling. Related IMiDs shown to affect KDR/VEGFR2 expression on endothelial progenitor cells."
+  },
+  {
+    "drug_name": "LENALIDOMIDE",
+    "gene_symbol": "CTNNB1",
+    "action_direction": "inhibitor",
+    "confidence": "medium",
+    "source": "PubMed:18805433, PubMed:37511270",
+    "keloid_target_role": "pro_keloid",
+    "net_effect": "beneficial",
+    "notes": "Lenalidomide inhibits beta-catenin associations with cadherin-5 and CD31 in endothelial cells. Systems biology analysis identifies CTNNB1 as central IMiD-targeted transcription factor."
+  }
+]

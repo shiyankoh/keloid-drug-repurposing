@@ -14,7 +14,7 @@
         "`python3 -c \"import json; json.load(open('data/directionality_annotations.json'))\"` succeeds"
       ],
       "priority": 1,
-      "passes": false,
+      "passes": true,
       "notes": ""
     },
     {
@@ -31,7 +31,7 @@
         "Final `data/directionality_annotations.json` is valid JSON (verified with `python3 -c \"import json; json.load(open('data/directionality_annotations.json'))\"`)"
       ],
       "priority": 2,
-      "passes": false,
+      "passes": true,
       "notes": ""
     },
     {
