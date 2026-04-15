@@ -17,6 +17,7 @@ Started: Wed 15 Apr 2026 23:09:33 +08
 - PI3K/mTOR feedback loop: mTORC1 inhibition relieves S6K→IRS-1 negative feedback, potentially activating PI3K. Use 'modulator' + net_effect='unclear' for PIK3CA when drug is an mTOR inhibitor.
 - Natural products (cucurbitacin B, etc.) may have ChEMBL molecule records but no mechanism-of-action data — PubMed is the primary source for directionality
 - When inferring direction from upstream pathway effects (e.g., TGF-β1 inhibition → SMAD3 inhibition), keep confidence low unless direct gene-level evidence exists
+- Akt inhibitors can paradoxically activate STAT3 via compensatory JAK2/STAT3 signaling — don't assume kinase pathway inhibition means all downstream targets are inhibited
 
 ---
 
@@ -159,4 +160,17 @@ Started: Wed 15 Apr 2026 23:09:33 +08
   - Cucurbitacin B has exceptionally strong STAT3 evidence (CETSA-validated direct binding) — rare for a natural product to have this level of target validation
   - When a drug inhibits a pathway upstream of a target gene (e.g., TGF-β1 → SMAD3), use the inferred direction but keep confidence low unless direct gene-level evidence exists
   - CuB also inhibits PI3K/Akt/mTOR, NF-κB, and Wnt pathways — broader than just STAT3, but STAT3 is the best-validated target
+---
+
+## 2026-04-15 - US-012
+- Researched MILTEFOSINE directionality against STAT3, SMAD3
+- ChEMBL ID: CHEMBL125, phospholipid analog (alkylphosphocholine). ChEMBL mechanism listed as "Unknown" — involves lipid interaction, cytochrome c oxidase inhibition, apoptosis.
+- STAT3: activator (medium confidence) — two independent studies (CVB3 antiviral + megakaryocyte differentiation) show miltefosine enhances STAT3 activation via Akt inhibition → compensatory JAK2/STAT3 signaling. net_effect='unfavorable'
+- SMAD3: inhibitor (medium confidence) — miltefosine suppresses TGFβ1/Smad3 signaling via pT308-Akt inhibition in T-ALL leukemia model. net_effect='beneficial'
+- Files changed: docs/directionality/MILTEFOSINE.md (created), data/directionality_annotations.json (2 entries added, total now 36)
+- **Learnings for future iterations:**
+  - Akt inhibitors can paradoxically activate STAT3 via compensatory signaling — don't assume kinase inhibition = downstream pathway inhibition
+  - Miltefosine is the second drug (after peginterferon alfa-2b) with an unfavorable net_effect entry — mixed profiles are real and should be documented honestly
+  - ChEMBL "Unknown" mechanism doesn't mean no data — it means the primary mechanism is complex/membrane-mediated and doesn't fit standard target-based pharmacology
+  - No fibrosis-specific literature exists for miltefosine — all evidence comes from virology and oncology models
 ---

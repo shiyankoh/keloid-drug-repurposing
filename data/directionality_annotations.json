@@ -338,5 +338,25 @@
     "keloid_target_role": "pro_keloid",
     "net_effect": "beneficial",
     "notes": "No direct CuB-SMAD3 evidence in literature. Indirect inference: CuB downregulates TGF-β1 expression via SIRT1/IGFBPrP1 axis in liver fibrosis models. TGF-β1 signals through SMAD3, so reduced TGF-β1 would reduce SMAD3 activation. All evidence from hepatic/cardiac fibrosis — no keloid-specific data."
+  },
+  {
+    "drug_name": "MILTEFOSINE",
+    "gene_symbol": "STAT3",
+    "action_direction": "activator",
+    "confidence": "medium",
+    "source": "PubMed:38309307, PubMed:40292315",
+    "keloid_target_role": "pro_keloid",
+    "net_effect": "unfavorable",
+    "notes": "Miltefosine enhances STAT3 activation via Akt inhibition-mediated compensatory signaling. Two independent studies confirm: CVB3 antiviral model shows STAT3 activation essential for drug efficacy (knockdown abolishes activity); megakaryocyte model shows JAK2/STAT3 pathway activation at 10-40 μM. Activating a pro-keloid target is unfavorable."
+  },
+  {
+    "drug_name": "MILTEFOSINE",
+    "gene_symbol": "SMAD3",
+    "action_direction": "inhibitor",
+    "confidence": "medium",
+    "source": "PubMed:32063363",
+    "keloid_target_role": "pro_keloid",
+    "net_effect": "beneficial",
+    "notes": "Miltefosine suppresses TGFβ1/Smad3 signaling pathway in Pten-null T-ALL leukemia. Mechanism: pT308-Akt inhibition leads to TGFβ1/Smad3 suppression and β-catenin degradation. Evidence from leukemia blasts, not fibroblasts, but TGFβ1/SMAD3 pathway is directly relevant to keloid fibrosis."
   }
 ]
