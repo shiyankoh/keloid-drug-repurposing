@@ -1,5 +1,16 @@
 # Keloid Pipeline — Deferred Work
 
+## Science Deepening Roadmap (priority order)
+
+Four gaps identified 2026-04-15. Tackling in this order:
+
+- [ ] **A. Directionality** — can't tell inhibitors from activators. Current status: IN PROGRESS (brainstorming)
+- [ ] **B. Evidence quality** — most evidence scores are a flat 0.70. Scoring is too uniform to distinguish strongly vs weakly supported candidates.
+- [ ] **C. Missing data sources** — ChEMBL (potency/IC50), GEO (actual keloid gene expression), DrugBank (mechanism detail) not yet tapped.
+- [ ] **D. Literature blind spot** — structured DBs miss case reports and emerging research. Need PubMed semantic search.
+
+---
+
 ## DONE: Clinical Trials Cross-Reference
 
 Completed 2026-03-29. See `scripts/clinical_trials.py`. Found 269 keloid/scar trials, matched 6 to top 100 candidates. Results integrated into report.
