@@ -358,5 +358,25 @@
     "keloid_target_role": "pro_keloid",
     "net_effect": "beneficial",
     "notes": "Miltefosine suppresses TGFβ1/Smad3 signaling pathway in Pten-null T-ALL leukemia. Mechanism: pT308-Akt inhibition leads to TGFβ1/Smad3 suppression and β-catenin degradation. Evidence from leukemia blasts, not fibroblasts, but TGFβ1/SMAD3 pathway is directly relevant to keloid fibrosis."
+  },
+  {
+    "drug_name": "TRIFLUOPERAZINE",
+    "gene_symbol": "STAT3",
+    "action_direction": "unknown",
+    "confidence": "low",
+    "source": "PubMed:32195026, CaM/CaMKII-STAT3 literature",
+    "keloid_target_role": "pro_keloid",
+    "net_effect": "unclear",
+    "notes": "Conflicting evidence. Calmodulin/CaMKII positively regulates JAK2/STAT3 signaling, so TFP's calmodulin antagonism should theoretically reduce STAT3 activation. However, the only experimental paper (PMID 32195026, melanoma) showed dose-dependent p-STAT3 increases with TFP treatment. No fibrosis-specific data exists. Direction is unknown due to contradictory theoretical and experimental evidence."
+  },
+  {
+    "drug_name": "TRIFLUOPERAZINE",
+    "gene_symbol": "SMAD3",
+    "action_direction": "inhibitor",
+    "confidence": "low",
+    "source": "PubMed:39090667, CaMKII-SMAD fibrosis literature",
+    "keloid_target_role": "pro_keloid",
+    "net_effect": "beneficial",
+    "notes": "TFP demonstrated anti-fibrotic effects in DMM osteoarthritis mice via NUPR1 inhibition (PMID 39090667). CaMKII mediates TGF-β/SMAD activation in renal and hepatic fibrosis models — calmodulin antagonism should reduce CaMKII-dependent SMAD signaling. The NUPR1 paper paradoxically showed increased SMAD3 pathway activation alongside reduced fibrosis, but net anti-fibrotic effect supports inhibitor designation at low confidence."
   }
 ]

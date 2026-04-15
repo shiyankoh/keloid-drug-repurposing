@@ -18,6 +18,8 @@ Started: Wed 15 Apr 2026 23:09:33 +08
 - Natural products (cucurbitacin B, etc.) may have ChEMBL molecule records but no mechanism-of-action data — PubMed is the primary source for directionality
 - When inferring direction from upstream pathway effects (e.g., TGF-β1 inhibition → SMAD3 inhibition), keep confidence low unless direct gene-level evidence exists
 - Akt inhibitors can paradoxically activate STAT3 via compensatory JAK2/STAT3 signaling — don't assume kinase pathway inhibition means all downstream targets are inhibited
+- Not all FDA-approved drugs have mechanism-of-action entries in ChEMBL — antipsychotics/phenothiazines may have molecule records but empty mechanisms
+- When theoretical pathway predictions contradict experimental data, use 'unknown' rather than forcing a direction
 
 ---
 
@@ -173,4 +175,18 @@ Started: Wed 15 Apr 2026 23:09:33 +08
   - Miltefosine is the second drug (after peginterferon alfa-2b) with an unfavorable net_effect entry — mixed profiles are real and should be documented honestly
   - ChEMBL "Unknown" mechanism doesn't mean no data — it means the primary mechanism is complex/membrane-mediated and doesn't fit standard target-based pharmacology
   - No fibrosis-specific literature exists for miltefosine — all evidence comes from virology and oncology models
+---
+
+## 2026-04-15 - US-013
+- Researched TRIFLUOPERAZINE directionality against STAT3, SMAD3
+- ChEMBL ID: CHEMBL422, typical antipsychotic / phenothiazine. No mechanism-of-action records in ChEMBL. Primary targets: DRD2, calmodulin, NUPR1.
+- STAT3: unknown (low confidence) — conflicting evidence. Calmodulin/CaMKII positively regulates STAT3, so CaM antagonism should inhibit it. But PMID 32195026 (melanoma) showed TFP dose-dependently increases p-STAT3. net_effect='unclear'
+- SMAD3: inhibitor (low confidence) — CaMKII mediates TGF-β/SMAD activation in fibrosis. TFP showed anti-fibrotic effect in OA model via NUPR1 inhibition (PMID 39090667). net_effect='beneficial'
+- Files changed: docs/directionality/TRIFLUOPERAZINE.md (created), data/directionality_annotations.json (2 entries added, total now 38)
+- **Learnings for future iterations:**
+  - Antipsychotics may have no ChEMBL mechanism-of-action entries despite being approved drugs — don't assume all FDA-approved drugs have mechanisms in ChEMBL
+  - TFP targets calmodulin, DRD2, and NUPR1 — three distinct mechanisms that can produce opposing effects on the same target (e.g., CaM antagonism predicts STAT3 inhibition but experimental data shows STAT3 activation)
+  - When theoretical pathway predictions contradict experimental data, use 'unknown' rather than forcing either direction
+  - NUPR1 inhibition is TFP's emerging anti-fibrotic mechanism (2024 paper) — may become the primary source for future TFP-fibrosis directionality
+  - PubMed search can fail silently when term parsing strips leading characters — always use quoted terms for drug names
 ---
