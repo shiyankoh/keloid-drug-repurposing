@@ -12,6 +12,7 @@ Started: Wed 15 Apr 2026 23:09:33 +08
 - When a drug's effect on a gene is too indirect/speculative to assign a direction, use 'unknown' + net_effect='unclear'
 - Imatinib's ChEMBL mechanisms are under CHEMBL1642 (mesylate salt), not CHEMBL941 (free base) — always try salt forms if free base returns empty mechanisms
 - Multi-kinase inhibitors (imatinib, etc.) often have well-documented anti-fibrotic effects via pathways not listed in their ChEMBL mechanisms (e.g., c-Abl → TGF-β crosstalk)
+- Corticosteroids (dexamethasone) act via GR → broad transcriptional suppression; most pro-keloid targets will be inhibited. VEGFA suppression has the strongest clinical evidence.
 
 ---
 
@@ -85,4 +86,19 @@ Started: Wed 15 Apr 2026 23:09:33 +08
   - Not all drugs have purely beneficial profiles — IFN-α activates JAK2 (pro_keloid), yielding an unfavorable net_effect
   - Type I IFN canonical signaling uses JAK1/TYK2, but JAK2 also participates — this is a nuanced distinction worth documenting
   - Biologics (proteins) appear in ChEMBL with mechanisms, unlike antibodies which sometimes miss
+---
+
+## 2026-04-15 - US-007
+- Researched DEXAMETHASONE directionality against SMAD3, VEGFA, KDR, CTNNB1
+- ChEMBL ID: CHEMBL384467, mechanism: Glucocorticoid receptor agonist (target CHEMBL2034/NR3C1) — GR is not in our gene list, all effects indirect
+- SMAD3: inhibitor (medium confidence) — GR-SMAD3 protein interaction + SMAD7 induction blocks TGF-β signaling
+- VEGFA: inhibitor (high confidence) — potent VEGF suppressor, clinically exploited in Ozurdex implants
+- KDR: inhibitor (medium confidence) — corticosteroids downregulate VEGFR2/KDR on endothelial cells
+- CTNNB1: inhibitor (low confidence) — GR can induce GSK-3β and suppress Wnt/β-catenin, but evidence is mixed across cell types
+- All 4 targets net_effect='beneficial' — uniformly favorable profile
+- Files changed: docs/directionality/DEXAMETHASONE.md (created), data/directionality_annotations.json (4 entries added, total now 22)
+- **Learnings for future iterations:**
+  - Corticosteroids have broad transcriptional effects — most pro-keloid targets will be inhibited via NF-κB/AP-1 suppression
+  - VEGFA inhibition by dexamethasone is the strongest evidence (high confidence) — clinical use in ophthalmology provides strong validation
+  - β-catenin/Wnt modulation by GR is context-dependent — confidence should be low unless fibroblast-specific data exists
 ---

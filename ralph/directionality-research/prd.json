@@ -111,7 +111,7 @@
         "Annotations JSON remains valid"
       ],
       "priority": 7,
-      "passes": false,
+      "passes": true,
       "notes": ""
     },
     {
