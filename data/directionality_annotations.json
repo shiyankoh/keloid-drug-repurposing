@@ -218,5 +218,35 @@
     "keloid_target_role": "pro_keloid",
     "net_effect": "beneficial",
     "notes": "GR activation can induce GSK-3B activity promoting beta-catenin degradation and interact with TCF/LEF to suppress Wnt target genes. Evidence is mixed across cell types \u2014 low confidence for keloid fibroblasts specifically."
+  },
+  {
+    "drug_name": "THALIDOMIDE",
+    "gene_symbol": "TNF",
+    "action_direction": "inhibitor",
+    "confidence": "high",
+    "source": "PubMed:1712483, PubMed:12684497",
+    "keloid_target_role": "context_dependent",
+    "net_effect": "unclear",
+    "notes": "Thalidomide is the original TNF-alpha inhibitor \u2014 selectively inhibits TNF-alpha production by accelerating mRNA degradation (Sampaio et al. 1991). High confidence based on extensive clinical and preclinical validation. TNF role in keloids is context-dependent."
+  },
+  {
+    "drug_name": "THALIDOMIDE",
+    "gene_symbol": "VEGFA",
+    "action_direction": "inhibitor",
+    "confidence": "medium",
+    "source": "PubMed:11585717, PubMed:15611251",
+    "keloid_target_role": "pro_keloid",
+    "net_effect": "beneficial",
+    "notes": "Thalidomide has potent anti-angiogenic activity including suppression of VEGF secretion. Originally discovered as anti-angiogenic in a rabbit corneal micropocket assay. Clinically exploited in multiple myeloma where VEGF drives tumor angiogenesis."
+  },
+  {
+    "drug_name": "THALIDOMIDE",
+    "gene_symbol": "CTNNB1",
+    "action_direction": "inhibitor",
+    "confidence": "medium",
+    "source": "PubMed:18805433, PubMed:21187285",
+    "keloid_target_role": "pro_keloid",
+    "net_effect": "beneficial",
+    "notes": "IMiDs modulate Wnt/beta-catenin signaling via cereblon-mediated substrate degradation. Thalidomide disrupts beta-catenin associations with cadherin-5 and CD31, similar to lenalidomide. Cereblon interaction is the molecular basis for all IMiD activities."
   }
 ]

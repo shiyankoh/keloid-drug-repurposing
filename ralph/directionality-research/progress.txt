@@ -102,3 +102,17 @@ Started: Wed 15 Apr 2026 23:09:33 +08
   - VEGFA inhibition by dexamethasone is the strongest evidence (high confidence) — clinical use in ophthalmology provides strong validation
   - β-catenin/Wnt modulation by GR is context-dependent — confidence should be low unless fibroblast-specific data exists
 ---
+
+## 2026-04-15 - US-008
+- Researched THALIDOMIDE directionality against TNF, VEGFA, CTNNB1
+- ChEMBL ID: CHEMBL468, primary mechanism: CRL4(CRBN) E3 ubiquitin ligase inhibitor — same cereblon target as lenalidomide, no matches for our gene list
+- TNF: inhibitor (high confidence) — thalidomide is the original TNF-alpha inhibitor, accelerates mRNA degradation (Sampaio 1991)
+- VEGFA: inhibitor (medium confidence) — potent anti-angiogenic activity, suppresses VEGF secretion
+- CTNNB1: inhibitor (medium confidence) — IMiDs modulate Wnt/β-catenin via cereblon-mediated substrate degradation
+- TNF marked net_effect='unclear' (context_dependent); VEGFA and CTNNB1 net_effect='beneficial'
+- Files changed: docs/directionality/THALIDOMIDE.md (created), data/directionality_annotations.json (3 entries added, total now 25)
+- **Learnings for future iterations:**
+  - Thalidomide and lenalidomide share the same cereblon target and similar downstream effects — can use lenalidomide research as a reference for thalidomide entries
+  - Thalidomide's TNF inhibition is high confidence (unlike lenalidomide's medium for other targets) because TNF-alpha inhibition was thalidomide's first discovered pharmacological property
+  - IMiD CTNNB1 entries can share the same PubMed sources (18805433) since the mechanism is class-wide
+---
