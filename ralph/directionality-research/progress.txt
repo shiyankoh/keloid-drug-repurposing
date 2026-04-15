@@ -8,6 +8,8 @@ Started: Wed 15 Apr 2026 23:09:33 +08
 - Research docs go in `docs/directionality/` at the Keloid project root
 - TNF is context_dependent, all other target genes are pro_keloid
 - Each JSON entry needs exactly 8 fields: drug_name, gene_symbol, action_direction, confidence, source, keloid_target_role, net_effect, notes
+- Biologics (antibodies) always have ChEMBL entries but mechanisms won't match our gene list — use PubMed fallback, keep confidence low unless strong clinical trial data exists
+- When a drug's effect on a gene is too indirect/speculative to assign a direction, use 'unknown' + net_effect='unclear'
 
 ---
 
@@ -27,4 +29,17 @@ Started: Wed 15 Apr 2026 23:09:33 +08
   - Lenalidomide's primary ChEMBL mechanism is Cereblon E3 ubiquitin ligase inhibitor — all keloid-relevant gene effects are downstream/indirect
   - PubMed searches work well with `<drug>+<gene>+mechanism` format
   - KDR-specific searches may return zero results; try broader terms like `VEGFR+angiogenesis`
+---
+
+## 2026-04-15 - US-003
+- Researched RITUXIMAB directionality against IL6, JAK2, TGFB1
+- ChEMBL ID: CHEMBL1201576, type: Antibody, primary target: CD20 (MS4A1) — no matches for our gene list as expected
+- IL6: inhibitor (medium confidence) — B cell depletion reduces IL-6 production, well-documented in RA studies
+- JAK2: unknown (low confidence) — no direct or clear indirect mechanism
+- TGFB1: inhibitor (low confidence) — limited evidence from systemic sclerosis studies
+- Files changed: docs/directionality/RITUXIMAB.md (created), data/directionality_annotations.json (3 entries added, total now 7)
+- **Learnings for future iterations:**
+  - Biologics (antibodies) will have ChEMBL entries but mechanisms won't match our gene list — always expect PubMed fallback
+  - For biologics with indirect effects, confidence should generally be low unless there's strong clinical evidence (e.g., IL-6 reduction post-rituximab is medium because of RA trial data)
+  - When a drug's effect on a gene is too indirect/speculative, use 'unknown' rather than forcing a direction
 ---

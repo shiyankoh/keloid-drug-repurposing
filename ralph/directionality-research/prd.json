@@ -47,7 +47,7 @@
         "`data/directionality_annotations.json` remains valid JSON after append"
       ],
       "priority": 3,
-      "passes": false,
+      "passes": true,
       "notes": ""
     },
     {

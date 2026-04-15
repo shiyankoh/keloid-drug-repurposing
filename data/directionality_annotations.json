@@ -38,5 +38,35 @@
     "keloid_target_role": "pro_keloid",
     "net_effect": "beneficial",
     "notes": "Lenalidomide inhibits beta-catenin associations with cadherin-5 and CD31 in endothelial cells. Systems biology analysis identifies CTNNB1 as central IMiD-targeted transcription factor."
+  },
+  {
+    "drug_name": "RITUXIMAB",
+    "gene_symbol": "IL6",
+    "action_direction": "inhibitor",
+    "confidence": "medium",
+    "source": "PubMed:17469107, PubMed:20305122",
+    "keloid_target_role": "pro_keloid",
+    "net_effect": "beneficial",
+    "notes": "Indirect effect — rituximab depletes CD20+ B cells, which are major IL-6 producers. RA clinical studies demonstrate significant serum IL-6 reduction following rituximab treatment."
+  },
+  {
+    "drug_name": "RITUXIMAB",
+    "gene_symbol": "JAK2",
+    "action_direction": "unknown",
+    "confidence": "low",
+    "source": "ChEMBL:CHEMBL1201576, PubMed review",
+    "keloid_target_role": "pro_keloid",
+    "net_effect": "unclear",
+    "notes": "No direct or well-documented indirect effect on JAK2. Rituximab targets CD20 on B cells; any JAK2 modulation would be a distant downstream consequence of reduced cytokine milieu."
+  },
+  {
+    "drug_name": "RITUXIMAB",
+    "gene_symbol": "TGFB1",
+    "action_direction": "inhibitor",
+    "confidence": "low",
+    "source": "PubMed:21623684, PubMed:26004142",
+    "keloid_target_role": "pro_keloid",
+    "net_effect": "beneficial",
+    "notes": "Indirect — B cells produce TGF-β1; depletion via rituximab may reduce TGF-β1 levels. Limited evidence from systemic sclerosis studies suggests reduced TGF-β signaling post-rituximab."
   }
 ]
