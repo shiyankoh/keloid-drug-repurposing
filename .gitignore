@@ -7,3 +7,10 @@ __pycache__/
 venv/
 .env
 data/structures/
+
+# Ralph runtime files (copied from ralph-skills plugin; prd.json is tracked)
+ralph/**/ralph.sh
+ralph/**/CLAUDE.md
+ralph/**/progress.txt
+ralph/**/.last-branch
+ralph/**/archive/
