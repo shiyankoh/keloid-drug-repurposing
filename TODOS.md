@@ -4,31 +4,43 @@
 
 Four gaps identified 2026-04-15. Tackling in this order:
 
-- [ ] **A. Directionality** — can't tell inhibitors from activators. Current status: IN PROGRESS (Tasks 0–3, 5–6 done. Task 4 next: create ralph PRD file + run `/ralph`. Task 7 last: overnight run.)
+- [ ] **A. Directionality** — can't tell inhibitors from activators. Current status: IN PROGRESS (Tasks 0–6 done. Task 7 RUNNING overnight 2026-04-15 via `ralph/directionality-research/ralph.sh`.)
 - [ ] **B. Evidence quality** — most evidence scores are a flat 0.70. Scoring is too uniform to distinguish strongly vs weakly supported candidates.
 - [ ] **C. Missing data sources** — ChEMBL (potency/IC50), GEO (actual keloid gene expression), DrugBank (mechanism detail) not yet tapped.
 - [ ] **D. Literature blind spot** — structured DBs miss case reports and emerging research. Need PubMed semantic search.
 
 ---
 
-## Directionality Layer — Next Steps (Task 4 + 7)
+## Directionality Layer — Task 7 RUNNING
 
-**Where we left off (2026-04-15):** Tasks 0–3, 5–6 are committed and all 130 tests pass. The pipeline now tracks `target_role` per gene (TNF = context_dependent, all others = pro_keloid) and `action_direction` per drug-gene pair (empty until ralph runs). The report shows `[?]` for all drugs pending the ralph annotation loop.
+**Status (2026-04-15 evening):** Ralph loop launched in a separate terminal against `ralph/directionality-research/prd.json` (14 stories: init + 12 drugs + final validation). ETA 1-2 hours.
 
-**Task 4 — Create ralph PRD and generate prd.js:**
-1. Copy the PRD from the plan: `docs/superpowers/plans/2026-04-15-directionality-layer.md` (Task 4 Step 1 section)
-2. Save it to `docs/ralph-prd-directionality.md`
-3. In a fresh Claude Code session, run: `/ralph docs/ralph-prd-directionality.md`
-4. This generates `prd.js` in the project root
+**Files:**
+- `docs/ralph-prd-directionality.md` — human-readable PRD (committed)
+- `ralph/directionality-research/prd.json` — 14 user stories for ralph (committed)
+- `ralph/directionality-research/ralph.sh` + `CLAUDE.md` — copied from ralph-skills plugin (gitignored)
+- Ralph runs on branch `ralph/directionality-research` (auto-created from main)
 
-**Task 7 — Overnight ralph run:**
-1. Open Claude Code in the Keloid project directory
-2. Run: `/ralph prd.js`
-3. Leave running ~1-2 hours. Each of the 12 drugs takes ~5-10 min (ChEMBL API + web fallback)
-4. Monitor `docs/directionality/` — one `.md` file appears per drug
-5. After: review docs, then run `python3 -m scripts.08_import_directionality`
-6. Then: `python3 -m scripts.03_score_candidates && python3 -m scripts.04_generate_report`
-7. Report will show `[+]/[!]/[~]` instead of `[?]`
+**Monitor:**
+```bash
+tail -f ralph/directionality-research/progress.txt
+ls docs/directionality/   # grows to 12 .md files
+```
+
+**When ralph completes (`<promise>COMPLETE</promise>`):**
+1. Review 12 research docs in `docs/directionality/`
+2. Spot-check `data/directionality_annotations.json` (expect 38 entries, 8 fields each)
+3. Merge ralph branch into main: `git checkout main && git merge ralph/directionality-research`
+4. Import + rescore + regenerate report:
+```bash
+source venv/bin/activate
+python3 -m scripts.08_import_directionality
+python3 -m scripts.03_score_candidates
+python3 -m scripts.04_generate_report
+```
+5. Report will show `[+]/[!]/[~]` instead of `[?]` for the 12 candidates
+
+**If ralph gets stuck / fails a story:** Edit `prd.json` to set that story's `passes: true` manually if the output is good enough, or adjust acceptance criteria and rerun `./ralph.sh --tool claude N`.
 
 ---
 
