@@ -318,5 +318,25 @@
     "keloid_target_role": "pro_keloid",
     "net_effect": "unclear",
     "notes": "No published evidence of aspirin modulating CYP24A1 expression or enzymatic activity. Only PubMed association is a pharmacogenomic SNP (rs4809957) linked to aspirin-induced GI bleeding risk — not a mechanistic drug-gene interaction."
+  },
+  {
+    "drug_name": "CUCURBITACIN B",
+    "gene_symbol": "STAT3",
+    "action_direction": "inhibitor",
+    "confidence": "high",
+    "source": "PubMed:38950838, PubMed:29250925, PubMed:40818548",
+    "keloid_target_role": "pro_keloid",
+    "net_effect": "beneficial",
+    "notes": "Direct STAT3 inhibitor — physical binding validated by CETSA. Inhibits STAT3 phosphorylation without affecting total protein levels. Anti-fibrotic in CCl4-induced hepatic fibrosis via STAT3 inhibition, reducing collagen-1α and α-SMA. 27 PubMed papers on CuB+STAT3."
+  },
+  {
+    "drug_name": "CUCURBITACIN B",
+    "gene_symbol": "SMAD3",
+    "action_direction": "inhibitor",
+    "confidence": "low",
+    "source": "PubMed:32452080, PubMed:29250925",
+    "keloid_target_role": "pro_keloid",
+    "net_effect": "beneficial",
+    "notes": "No direct CuB-SMAD3 evidence in literature. Indirect inference: CuB downregulates TGF-β1 expression via SIRT1/IGFBPrP1 axis in liver fibrosis models. TGF-β1 signals through SMAD3, so reduced TGF-β1 would reduce SMAD3 activation. All evidence from hepatic/cardiac fibrosis — no keloid-specific data."
   }
 ]
