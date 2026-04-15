@@ -248,5 +248,45 @@
     "keloid_target_role": "pro_keloid",
     "net_effect": "beneficial",
     "notes": "IMiDs modulate Wnt/beta-catenin signaling via cereblon-mediated substrate degradation. Thalidomide disrupts beta-catenin associations with cadherin-5 and CD31, similar to lenalidomide. Cereblon interaction is the molecular basis for all IMiD activities."
+  },
+  {
+    "drug_name": "SIROLIMUS",
+    "gene_symbol": "MTOR",
+    "action_direction": "inhibitor",
+    "confidence": "high",
+    "source": "ChEMBL:CHEMBL413, PubMed:12461523, PubMed:20068183",
+    "keloid_target_role": "pro_keloid",
+    "net_effect": "beneficial",
+    "notes": "Canonical mTOR inhibitor. FKBP12-sirolimus complex directly inhibits mTORC1 kinase activity, blocking S6K1 and 4E-BP1 phosphorylation. Well-validated in fibrosis models \u2014 reduces fibroblast proliferation and collagen synthesis."
+  },
+  {
+    "drug_name": "SIROLIMUS",
+    "gene_symbol": "PIK3CA",
+    "action_direction": "modulator",
+    "confidence": "medium",
+    "source": "PubMed:16489089, PubMed:22031083",
+    "keloid_target_role": "pro_keloid",
+    "net_effect": "unclear",
+    "notes": "Complex: mTOR is downstream of PI3K, but mTORC1 inhibition relieves S6K-mediated negative feedback on IRS-1, potentially activating PI3K/AKT (O'Reilly 2006). Net PI3K pathway activity depends on cell context. In fibrosis models, rapamycin generally suppresses proliferation despite feedback."
+  },
+  {
+    "drug_name": "SIROLIMUS",
+    "gene_symbol": "EGFR",
+    "action_direction": "inhibitor",
+    "confidence": "low",
+    "source": "PubMed:18280086, PubMed:22031083",
+    "keloid_target_role": "pro_keloid",
+    "net_effect": "beneficial",
+    "notes": "Indirect \u2014 mTOR inhibition reduces cap-dependent translation, which can lower EGFR protein levels. Some evidence that rapamycin sensitizes cells to EGFR inhibitors. No direct EGFR kinase inhibition."
+  },
+  {
+    "drug_name": "SIROLIMUS",
+    "gene_symbol": "JAK2",
+    "action_direction": "inhibitor",
+    "confidence": "low",
+    "source": "PubMed:20829794, PubMed:22031083",
+    "keloid_target_role": "pro_keloid",
+    "net_effect": "beneficial",
+    "notes": "Indirect \u2014 mTOR inhibition reduces JAK-STAT signaling output in myeloproliferative models. Rapamycin suppresses JAK2-V617F-driven proliferation in synergy with JAK2 inhibitors. No direct JAK2 kinase inhibition."
   }
 ]

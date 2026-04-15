@@ -13,6 +13,8 @@ Started: Wed 15 Apr 2026 23:09:33 +08
 - Imatinib's ChEMBL mechanisms are under CHEMBL1642 (mesylate salt), not CHEMBL941 (free base) — always try salt forms if free base returns empty mechanisms
 - Multi-kinase inhibitors (imatinib, etc.) often have well-documented anti-fibrotic effects via pathways not listed in their ChEMBL mechanisms (e.g., c-Abl → TGF-β crosstalk)
 - Corticosteroids (dexamethasone) act via GR → broad transcriptional suppression; most pro-keloid targets will be inhibited. VEGFA suppression has the strongest clinical evidence.
+- mTOR inhibitors (sirolimus): ChEMBL lists FKBP1A as target, not MTOR — the FKBP12-drug complex is what inhibits mTOR. Always note this indirection.
+- PI3K/mTOR feedback loop: mTORC1 inhibition relieves S6K→IRS-1 negative feedback, potentially activating PI3K. Use 'modulator' + net_effect='unclear' for PIK3CA when drug is an mTOR inhibitor.
 
 ---
 
@@ -115,4 +117,18 @@ Started: Wed 15 Apr 2026 23:09:33 +08
   - Thalidomide and lenalidomide share the same cereblon target and similar downstream effects — can use lenalidomide research as a reference for thalidomide entries
   - Thalidomide's TNF inhibition is high confidence (unlike lenalidomide's medium for other targets) because TNF-alpha inhibition was thalidomide's first discovered pharmacological property
   - IMiD CTNNB1 entries can share the same PubMed sources (18805433) since the mechanism is class-wide
+---
+
+## 2026-04-15 - US-009
+- Researched SIROLIMUS directionality against EGFR, JAK2, MTOR, PIK3CA
+- ChEMBL ID: CHEMBL413, primary mechanism: FK506-binding protein 1A (FKBP12) inhibitor — FKBP12-sirolimus complex then directly inhibits mTORC1
+- MTOR: inhibitor (high confidence) — canonical mTOR inhibitor, well-validated in fibrosis models
+- PIK3CA: modulator (medium confidence) — net_effect='unclear' due to feedback activation loop (mTORC1 inhibition → IRS-1 derepression → PI3K activation)
+- EGFR: inhibitor (low confidence) — indirect via reduced cap-dependent translation
+- JAK2: inhibitor (low confidence) — indirect, mTOR inhibition reduces JAK-STAT output in myeloproliferative models
+- Files changed: docs/directionality/SIROLIMUS.md (created), data/directionality_annotations.json (4 entries added, total now 29)
+- **Learnings for future iterations:**
+  - ChEMBL lists FKBP1A as sirolimus target, not MTOR — the drug-protein complex is the actual mTOR inhibitor
+  - PI3K/mTOR feedback loop (O'Reilly 2006) is a critical nuance — mTOR inhibitors may paradoxically activate PI3K/AKT. Use 'modulator' with net_effect='unclear' rather than forcing a direction
+  - Sirolimus is the first drug where one target gets 'modulator' direction — validates that not everything is simply inhibitor/activator/unknown
 ---
