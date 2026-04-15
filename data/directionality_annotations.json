@@ -68,5 +68,45 @@
     "keloid_target_role": "pro_keloid",
     "net_effect": "beneficial",
     "notes": "Indirect — B cells produce TGF-β1; depletion via rituximab may reduce TGF-β1 levels. Limited evidence from systemic sclerosis studies suggests reduced TGF-β signaling post-rituximab."
+  },
+  {
+    "drug_name": "IMATINIB",
+    "gene_symbol": "EGFR",
+    "action_direction": "unknown",
+    "confidence": "low",
+    "source": "ChEMBL:CHEMBL1642, PubMed review",
+    "keloid_target_role": "pro_keloid",
+    "net_effect": "unclear",
+    "notes": "Imatinib does not directly inhibit EGFR. Its kinase targets are ABL, PDGFR-β, and c-KIT — a distinct kinase family from EGFR/ErbB. No published evidence of meaningful EGFR modulation."
+  },
+  {
+    "drug_name": "IMATINIB",
+    "gene_symbol": "JAK2",
+    "action_direction": "inhibitor",
+    "confidence": "low",
+    "source": "PubMed:36940909, PubMed:23446756",
+    "keloid_target_role": "pro_keloid",
+    "net_effect": "beneficial",
+    "notes": "Indirect effect — imatinib modulates NF-kB/JAK2/STAT3 pathway in colitis model. However, CML studies show JAK2 requires separate targeting to overcome imatinib resistance, implying imatinib does not directly inhibit JAK2 kinase activity."
+  },
+  {
+    "drug_name": "IMATINIB",
+    "gene_symbol": "SMAD3",
+    "action_direction": "inhibitor",
+    "confidence": "medium",
+    "source": "PubMed:15629889, PubMed:19151753",
+    "keloid_target_role": "pro_keloid",
+    "net_effect": "beneficial",
+    "notes": "Imatinib blocks non-canonical TGF-β signaling via c-Abl inhibition, reducing SMAD3-mediated fibrogenesis. Well-demonstrated in renal and pulmonary fibrosis models. Mechanism is indirect (c-Abl → TGF-β → SMAD3) but robust."
+  },
+  {
+    "drug_name": "IMATINIB",
+    "gene_symbol": "CTNNB1",
+    "action_direction": "inhibitor",
+    "confidence": "low",
+    "source": "PubMed:16263821, PubMed:28611108",
+    "keloid_target_role": "pro_keloid",
+    "net_effect": "beneficial",
+    "notes": "Imatinib mediates antineoplastic effects via Wnt/β-catenin in anaplastic thyroid cancer. Wnt/β-catenin is targetable in GIST context. Relevance to keloid fibroblasts is uncertain — evidence is cancer-specific."
   }
 ]

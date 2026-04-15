@@ -10,6 +10,8 @@ Started: Wed 15 Apr 2026 23:09:33 +08
 - Each JSON entry needs exactly 8 fields: drug_name, gene_symbol, action_direction, confidence, source, keloid_target_role, net_effect, notes
 - Biologics (antibodies) always have ChEMBL entries but mechanisms won't match our gene list — use PubMed fallback, keep confidence low unless strong clinical trial data exists
 - When a drug's effect on a gene is too indirect/speculative to assign a direction, use 'unknown' + net_effect='unclear'
+- Imatinib's ChEMBL mechanisms are under CHEMBL1642 (mesylate salt), not CHEMBL941 (free base) — always try salt forms if free base returns empty mechanisms
+- Multi-kinase inhibitors (imatinib, etc.) often have well-documented anti-fibrotic effects via pathways not listed in their ChEMBL mechanisms (e.g., c-Abl → TGF-β crosstalk)
 
 ---
 
@@ -42,4 +44,18 @@ Started: Wed 15 Apr 2026 23:09:33 +08
   - Biologics (antibodies) will have ChEMBL entries but mechanisms won't match our gene list — always expect PubMed fallback
   - For biologics with indirect effects, confidence should generally be low unless there's strong clinical evidence (e.g., IL-6 reduction post-rituximab is medium because of RA trial data)
   - When a drug's effect on a gene is too indirect/speculative, use 'unknown' rather than forcing a direction
+---
+
+## 2026-04-15 - US-004
+- Researched IMATINIB directionality against EGFR, JAK2, SMAD3, CTNNB1
+- ChEMBL ID: CHEMBL941 (free base) / CHEMBL1642 (mesylate salt). Mechanisms found under mesylate: ABL inhibitor, PDGFR-β inhibitor, KIT inhibitor, BCR-ABL inhibitor. None match our gene list.
+- EGFR: unknown (low confidence) — imatinib does not inhibit EGFR, distinct kinase family
+- JAK2: inhibitor (low confidence) — indirect modulation via NF-kB/JAK2/STAT3 pathway in colitis model; CML studies show JAK2 needs separate targeting
+- SMAD3: inhibitor (medium confidence) — well-documented c-Abl-mediated blockade of non-canonical TGF-β signaling reduces fibrogenesis
+- CTNNB1: inhibitor (low confidence) — Wnt/β-catenin modulation shown in thyroid cancer and GIST, but keloid relevance uncertain
+- Files changed: docs/directionality/IMATINIB.md (created), data/directionality_annotations.json (4 entries added, total now 11)
+- **Learnings for future iterations:**
+  - ChEMBL may store mechanisms under salt forms (e.g., CHEMBL1642 for imatinib mesylate) rather than free base (CHEMBL941) — try both
+  - Imatinib's anti-fibrotic mechanism via c-Abl → TGF-β crosstalk is well-established in literature even though it's not listed in ChEMBL mechanisms
+  - When a drug clearly does NOT target a gene (e.g., imatinib vs EGFR), use 'unknown' rather than forcing an indirect connection
 ---
