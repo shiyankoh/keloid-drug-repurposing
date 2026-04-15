@@ -1,0 +1,234 @@
+{
+  "project": "Keloid",
+  "branchName": "ralph/directionality-research",
+  "description": "Research drug-gene directionality (inhibitor vs activator) for 12 actionable keloid candidates via ChEMBL API with DrugBank/PubMed fallback. Produces per-drug research docs and a combined annotations JSON consumed by scripts/08_import_directionality.py.",
+  "userStories": [
+    {
+      "id": "US-001",
+      "title": "Initialize directionality output files",
+      "description": "As the research pipeline, I need an empty annotations JSON and output directory before per-drug stories run.",
+      "acceptanceCriteria": [
+        "Create directory `docs/directionality/` if it does not exist",
+        "Create `data/directionality_annotations.json` containing `[]` (valid empty JSON array) if it does not exist",
+        "If the file already exists with content, leave it alone (idempotent)",
+        "`python3 -c \"import json; json.load(open('data/directionality_annotations.json'))\"` succeeds"
+      ],
+      "priority": 1,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-002",
+      "title": "Research LENALIDOMIDE directionality",
+      "description": "Determine action_direction for LENALIDOMIDE against TNF, VEGFA, KDR, CTNNB1. Follow research protocol in docs/ralph-prd-directionality.md.",
+      "acceptanceCriteria": [
+        "Query ChEMBL mechanism endpoint for LENALIDOMIDE (pref_name lookup → molecule_chembl_id → mechanism.json)",
+        "For each of TNF, VEGFA, KDR, CTNNB1: set action_direction (inhibitor/activator/modulator/unknown) using ChEMBL first, DrugBank + PubMed fallback if unknown",
+        "Write `docs/directionality/LENALIDOMIDE.md` with drug class, ChEMBL ID, gene-by-gene table, 2-3 sentence summary, sources",
+        "Append 4 entries to `data/directionality_annotations.json` (one per target gene)",
+        "Each entry has all 8 fields: drug_name, gene_symbol, action_direction, confidence, source, keloid_target_role, net_effect, notes",
+        "TNF entry has net_effect='unclear' regardless of direction (context_dependent target role)",
+        "Final `data/directionality_annotations.json` is valid JSON (verified with `python3 -c \"import json; json.load(open('data/directionality_annotations.json'))\"`)"
+      ],
+      "priority": 2,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-003",
+      "title": "Research RITUXIMAB directionality",
+      "description": "Determine action_direction for RITUXIMAB against IL6, JAK2, TGFB1. Biologic — expect ChEMBL miss on our gene list, fall back to DrugBank/PubMed.",
+      "acceptanceCriteria": [
+        "Attempt ChEMBL lookup for RITUXIMAB (document the result — primary target is CD20/MS4A1 which is not in our gene list, so expect no matches for IL6/JAK2/TGFB1)",
+        "For IL6, JAK2, TGFB1: determine action_direction from DrugBank mechanism page + PubMed abstracts (rituximab is an anti-CD20 antibody; any effect on IL6/JAK2/TGFB1 is indirect — mark as 'unknown' with low confidence if no clear literature)",
+        "Write `docs/directionality/RITUXIMAB.md` with drug class, ChEMBL ID (or 'not found'), gene-by-gene table, summary explaining indirect mechanism, sources",
+        "Append 3 entries (one per target gene) to `data/directionality_annotations.json`",
+        "Each entry has all 8 fields with keloid_target_role='pro_keloid' for all three",
+        "`data/directionality_annotations.json` remains valid JSON after append"
+      ],
+      "priority": 3,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-004",
+      "title": "Research IMATINIB directionality",
+      "description": "Determine action_direction for IMATINIB against EGFR, JAK2, SMAD3, CTNNB1.",
+      "acceptanceCriteria": [
+        "Query ChEMBL mechanism endpoint for IMATINIB",
+        "For each of EGFR, JAK2, SMAD3, CTNNB1: set action_direction using ChEMBL → DrugBank → PubMed fallback chain",
+        "Write `docs/directionality/IMATINIB.md` with drug class (tyrosine kinase inhibitor), ChEMBL ID, gene-by-gene table, summary, sources",
+        "Append 4 entries to `data/directionality_annotations.json`",
+        "Each entry has all 8 fields with keloid_target_role='pro_keloid'",
+        "Annotations JSON remains valid"
+      ],
+      "priority": 4,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-005",
+      "title": "Research CELECOXIB directionality",
+      "description": "Determine action_direction for CELECOXIB against STAT3, PIK3CA, VEGFA, CTNNB1. Note: celecoxib's primary target is PTGS2/COX-2, so these are likely indirect effects.",
+      "acceptanceCriteria": [
+        "Query ChEMBL mechanism endpoint for CELECOXIB",
+        "For each of STAT3, PIK3CA, VEGFA, CTNNB1: set action_direction via ChEMBL → DrugBank → PubMed fallback (document indirect mechanisms where applicable)",
+        "Write `docs/directionality/CELECOXIB.md` with drug class (COX-2 inhibitor/NSAID), ChEMBL ID, gene-by-gene table, summary, sources",
+        "Append 4 entries to `data/directionality_annotations.json`",
+        "Each entry has all 8 fields with keloid_target_role='pro_keloid'",
+        "Annotations JSON remains valid"
+      ],
+      "priority": 5,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-006",
+      "title": "Research PEGINTERFERON ALFA-2B directionality",
+      "description": "Determine action_direction for PEGINTERFERON ALFA-2B against EGFR, IL6, JAK2. Biologic — likely ChEMBL miss, rely on literature.",
+      "acceptanceCriteria": [
+        "Attempt ChEMBL lookup for PEGINTERFERON ALFA-2B (primary target is IFNAR1/IFNAR2 interferon receptors; not in our list)",
+        "For EGFR, IL6, JAK2: determine action_direction from DrugBank + PubMed (type I interferon signals through JAK/STAT — JAK2 activation is a known downstream effect; document clearly)",
+        "Write `docs/directionality/PEGINTERFERON_ALFA-2B.md` with drug class, ChEMBL ID or 'not found', gene-by-gene table, summary, sources",
+        "Append 3 entries to `data/directionality_annotations.json`",
+        "Each entry has all 8 fields with keloid_target_role='pro_keloid'",
+        "Annotations JSON remains valid"
+      ],
+      "priority": 6,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-007",
+      "title": "Research DEXAMETHASONE directionality",
+      "description": "Determine action_direction for DEXAMETHASONE against SMAD3, VEGFA, KDR, CTNNB1. Corticosteroid — effects likely via glucocorticoid receptor and broad transcriptional repression.",
+      "acceptanceCriteria": [
+        "Query ChEMBL mechanism endpoint for DEXAMETHASONE",
+        "For each of SMAD3, VEGFA, KDR, CTNNB1: set action_direction via ChEMBL → DrugBank → PubMed fallback",
+        "Write `docs/directionality/DEXAMETHASONE.md` with drug class, ChEMBL ID, gene-by-gene table, summary, sources",
+        "Append 4 entries to `data/directionality_annotations.json`",
+        "Each entry has all 8 fields with keloid_target_role='pro_keloid'",
+        "Annotations JSON remains valid"
+      ],
+      "priority": 7,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-008",
+      "title": "Research THALIDOMIDE directionality",
+      "description": "Determine action_direction for THALIDOMIDE against TNF, VEGFA, CTNNB1. Immunomodulatory IMiD.",
+      "acceptanceCriteria": [
+        "Query ChEMBL mechanism endpoint for THALIDOMIDE",
+        "For each of TNF, VEGFA, CTNNB1: set action_direction via ChEMBL → DrugBank → PubMed fallback",
+        "Write `docs/directionality/THALIDOMIDE.md` with drug class (IMiD), ChEMBL ID, gene-by-gene table, summary, sources",
+        "Append 3 entries to `data/directionality_annotations.json`",
+        "Each entry has all 8 fields",
+        "TNF entry has net_effect='unclear' (context_dependent role); VEGFA and CTNNB1 use pro_keloid logic",
+        "Annotations JSON remains valid"
+      ],
+      "priority": 8,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-009",
+      "title": "Research SIROLIMUS directionality",
+      "description": "Determine action_direction for SIROLIMUS against EGFR, JAK2, MTOR, PIK3CA. Canonical mTOR inhibitor.",
+      "acceptanceCriteria": [
+        "Query ChEMBL mechanism endpoint for SIROLIMUS (expect strong MTOR inhibitor hit)",
+        "For each of EGFR, JAK2, MTOR, PIK3CA: set action_direction via ChEMBL → DrugBank → PubMed fallback",
+        "Write `docs/directionality/SIROLIMUS.md` with drug class (mTOR inhibitor), ChEMBL ID, gene-by-gene table, summary, sources",
+        "Append 4 entries to `data/directionality_annotations.json`",
+        "Each entry has all 8 fields with keloid_target_role='pro_keloid'",
+        "MTOR entry should be action_direction='inhibitor', net_effect='beneficial', confidence='high'",
+        "Annotations JSON remains valid"
+      ],
+      "priority": 9,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-010",
+      "title": "Research ASPIRIN directionality",
+      "description": "Determine action_direction for ASPIRIN against PIK3CA, TGFB1, CYP24A1. Aspirin's primary target is PTGS1/PTGS2 (COX); effects on these genes are indirect.",
+      "acceptanceCriteria": [
+        "Query ChEMBL mechanism endpoint for ASPIRIN",
+        "For each of PIK3CA, TGFB1, CYP24A1: set action_direction via ChEMBL → DrugBank → PubMed fallback (document that effects are indirect through COX inhibition)",
+        "Write `docs/directionality/ASPIRIN.md` with drug class (NSAID), ChEMBL ID, gene-by-gene table, summary, sources",
+        "Append 3 entries to `data/directionality_annotations.json`",
+        "Each entry has all 8 fields with keloid_target_role='pro_keloid'",
+        "Annotations JSON remains valid"
+      ],
+      "priority": 10,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-011",
+      "title": "Research CUCURBITACIN B directionality",
+      "description": "Determine action_direction for CUCURBITACIN B against STAT3, SMAD3. Natural product / STAT3 inhibitor.",
+      "acceptanceCriteria": [
+        "Query ChEMBL mechanism endpoint for CUCURBITACIN B (may not be in ChEMBL — natural product, fall back to literature)",
+        "For each of STAT3, SMAD3: set action_direction via ChEMBL → DrugBank → PubMed fallback",
+        "Write `docs/directionality/CUCURBITACIN_B.md` with drug class (natural product STAT3 inhibitor), ChEMBL ID or 'not found', gene-by-gene table, summary, sources",
+        "Append 2 entries to `data/directionality_annotations.json`",
+        "Each entry has all 8 fields with keloid_target_role='pro_keloid'",
+        "Annotations JSON remains valid"
+      ],
+      "priority": 11,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-012",
+      "title": "Research MILTEFOSINE directionality",
+      "description": "Determine action_direction for MILTEFOSINE against STAT3, SMAD3. Phospholipid analog, originally antiprotozoal.",
+      "acceptanceCriteria": [
+        "Query ChEMBL mechanism endpoint for MILTEFOSINE",
+        "For each of STAT3, SMAD3: set action_direction via ChEMBL → DrugBank → PubMed fallback",
+        "Write `docs/directionality/MILTEFOSINE.md` with drug class, ChEMBL ID, gene-by-gene table, summary, sources",
+        "Append 2 entries to `data/directionality_annotations.json`",
+        "Each entry has all 8 fields with keloid_target_role='pro_keloid'",
+        "Annotations JSON remains valid"
+      ],
+      "priority": 12,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-013",
+      "title": "Research TRIFLUOPERAZINE directionality",
+      "description": "Determine action_direction for TRIFLUOPERAZINE against STAT3, SMAD3. Typical antipsychotic / calmodulin antagonist.",
+      "acceptanceCriteria": [
+        "Query ChEMBL mechanism endpoint for TRIFLUOPERAZINE",
+        "For each of STAT3, SMAD3: set action_direction via ChEMBL → DrugBank → PubMed fallback (primary target is DRD2; STAT3/SMAD3 effects likely indirect via calmodulin)",
+        "Write `docs/directionality/TRIFLUOPERAZINE.md` with drug class, ChEMBL ID, gene-by-gene table, summary, sources",
+        "Append 2 entries to `data/directionality_annotations.json`",
+        "Each entry has all 8 fields with keloid_target_role='pro_keloid'",
+        "Annotations JSON remains valid"
+      ],
+      "priority": 13,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-014",
+      "title": "Validate complete annotations JSON",
+      "description": "Final pass: verify all 12 drugs have research docs and every drug-gene pair has a well-formed JSON entry.",
+      "acceptanceCriteria": [
+        "Exactly 12 files exist in `docs/directionality/` (one per drug, matching the drug name uppercase with underscores)",
+        "`data/directionality_annotations.json` contains exactly 38 entries (4+3+4+4+3+4+3+4+3+2+2+2 = 38 drug-gene pairs from the PRD)",
+        "Every entry has all 8 required fields: drug_name, gene_symbol, action_direction, confidence, source, keloid_target_role, net_effect, notes",
+        "Every action_direction value is one of: inhibitor, activator, modulator, unknown",
+        "Every confidence value is one of: high, medium, low",
+        "Every net_effect value is one of: beneficial, unfavorable, unclear",
+        "All TNF entries have net_effect='unclear' (LENALIDOMIDE-TNF, THALIDOMIDE-TNF)",
+        "Write `docs/directionality/VALIDATION.md` summarizing counts, any 'unknown' pairs flagged, and overall completeness check"
+      ],
+      "priority": 14,
+      "passes": false,
+      "notes": ""
+    }
+  ]
+}
