@@ -47,7 +47,7 @@
     "source": "PubMed:17469107, PubMed:20305122",
     "keloid_target_role": "pro_keloid",
     "net_effect": "beneficial",
-    "notes": "Indirect effect — rituximab depletes CD20+ B cells, which are major IL-6 producers. RA clinical studies demonstrate significant serum IL-6 reduction following rituximab treatment."
+    "notes": "Indirect effect \u2014 rituximab depletes CD20+ B cells, which are major IL-6 producers. RA clinical studies demonstrate significant serum IL-6 reduction following rituximab treatment."
   },
   {
     "drug_name": "RITUXIMAB",
@@ -67,7 +67,7 @@
     "source": "PubMed:21623684, PubMed:26004142",
     "keloid_target_role": "pro_keloid",
     "net_effect": "beneficial",
-    "notes": "Indirect — B cells produce TGF-β1; depletion via rituximab may reduce TGF-β1 levels. Limited evidence from systemic sclerosis studies suggests reduced TGF-β signaling post-rituximab."
+    "notes": "Indirect \u2014 B cells produce TGF-\u03b21; depletion via rituximab may reduce TGF-\u03b21 levels. Limited evidence from systemic sclerosis studies suggests reduced TGF-\u03b2 signaling post-rituximab."
   },
   {
     "drug_name": "IMATINIB",
@@ -77,7 +77,7 @@
     "source": "ChEMBL:CHEMBL1642, PubMed review",
     "keloid_target_role": "pro_keloid",
     "net_effect": "unclear",
-    "notes": "Imatinib does not directly inhibit EGFR. Its kinase targets are ABL, PDGFR-β, and c-KIT — a distinct kinase family from EGFR/ErbB. No published evidence of meaningful EGFR modulation."
+    "notes": "Imatinib does not directly inhibit EGFR. Its kinase targets are ABL, PDGFR-\u03b2, and c-KIT \u2014 a distinct kinase family from EGFR/ErbB. No published evidence of meaningful EGFR modulation."
   },
   {
     "drug_name": "IMATINIB",
@@ -87,7 +87,7 @@
     "source": "PubMed:36940909, PubMed:23446756",
     "keloid_target_role": "pro_keloid",
     "net_effect": "beneficial",
-    "notes": "Indirect effect — imatinib modulates NF-kB/JAK2/STAT3 pathway in colitis model. However, CML studies show JAK2 requires separate targeting to overcome imatinib resistance, implying imatinib does not directly inhibit JAK2 kinase activity."
+    "notes": "Indirect effect \u2014 imatinib modulates NF-kB/JAK2/STAT3 pathway in colitis model. However, CML studies show JAK2 requires separate targeting to overcome imatinib resistance, implying imatinib does not directly inhibit JAK2 kinase activity."
   },
   {
     "drug_name": "IMATINIB",
@@ -97,7 +97,7 @@
     "source": "PubMed:15629889, PubMed:19151753",
     "keloid_target_role": "pro_keloid",
     "net_effect": "beneficial",
-    "notes": "Imatinib blocks non-canonical TGF-β signaling via c-Abl inhibition, reducing SMAD3-mediated fibrogenesis. Well-demonstrated in renal and pulmonary fibrosis models. Mechanism is indirect (c-Abl → TGF-β → SMAD3) but robust."
+    "notes": "Imatinib blocks non-canonical TGF-\u03b2 signaling via c-Abl inhibition, reducing SMAD3-mediated fibrogenesis. Well-demonstrated in renal and pulmonary fibrosis models. Mechanism is indirect (c-Abl \u2192 TGF-\u03b2 \u2192 SMAD3) but robust."
   },
   {
     "drug_name": "IMATINIB",
@@ -107,7 +107,7 @@
     "source": "PubMed:16263821, PubMed:28611108",
     "keloid_target_role": "pro_keloid",
     "net_effect": "beneficial",
-    "notes": "Imatinib mediates antineoplastic effects via Wnt/β-catenin in anaplastic thyroid cancer. Wnt/β-catenin is targetable in GIST context. Relevance to keloid fibroblasts is uncertain — evidence is cancer-specific."
+    "notes": "Imatinib mediates antineoplastic effects via Wnt/\u03b2-catenin in anaplastic thyroid cancer. Wnt/\u03b2-catenin is targetable in GIST context. Relevance to keloid fibroblasts is uncertain \u2014 evidence is cancer-specific."
   },
   {
     "drug_name": "CELECOXIB",
@@ -147,7 +147,7 @@
     "source": "PubMed:16166264, PubMed:15767574",
     "keloid_target_role": "pro_keloid",
     "net_effect": "beneficial",
-    "notes": "Celecoxib downregulates Wnt/β-catenin signaling in colorectal cancer models. Reduces nuclear β-catenin accumulation and TCF/LEF transcriptional activity, partially independent of COX-2 inhibition."
+    "notes": "Celecoxib downregulates Wnt/\u03b2-catenin signaling in colorectal cancer models. Reduces nuclear \u03b2-catenin accumulation and TCF/LEF transcriptional activity, partially independent of COX-2 inhibition."
   },
   {
     "drug_name": "PEGINTERFERON ALFA-2B",
@@ -157,7 +157,7 @@
     "source": "PubMed:2463199, PubMed:15662773",
     "keloid_target_role": "pro_keloid",
     "net_effect": "beneficial",
-    "notes": "IFN-α has anti-proliferative effects that include downregulation of EGFR expression and signaling. Evidence primarily from epidermoid carcinoma and other epithelial models; fibroblast-specific data is limited."
+    "notes": "IFN-\u03b1 has anti-proliferative effects that include downregulation of EGFR expression and signaling. Evidence primarily from epidermoid carcinoma and other epithelial models; fibroblast-specific data is limited."
   },
   {
     "drug_name": "PEGINTERFERON ALFA-2B",
@@ -167,7 +167,7 @@
     "source": "PubMed:18029348, PubMed:15908955",
     "keloid_target_role": "pro_keloid",
     "net_effect": "beneficial",
-    "notes": "IFN-α suppresses pro-inflammatory cytokine production including IL-6 in fibrotic contexts. Consistent with clinical anti-fibrotic use in keloids, though the effect is indirect via broad immunomodulation."
+    "notes": "IFN-\u03b1 suppresses pro-inflammatory cytokine production including IL-6 in fibrotic contexts. Consistent with clinical anti-fibrotic use in keloids, though the effect is indirect via broad immunomodulation."
   },
   {
     "drug_name": "PEGINTERFERON ALFA-2B",
@@ -177,6 +177,46 @@
     "source": "PubMed:8530365, PubMed:16260494",
     "keloid_target_role": "pro_keloid",
     "net_effect": "unfavorable",
-    "notes": "Type I interferons signal through IFNAR → JAK-STAT pathway. While canonical signaling uses JAK1/TYK2, JAK2 associates with the IFNAR complex and is activated during type I IFN signaling. Activating a pro-keloid target is unfavorable."
+    "notes": "Type I interferons signal through IFNAR \u2192 JAK-STAT pathway. While canonical signaling uses JAK1/TYK2, JAK2 associates with the IFNAR complex and is activated during type I IFN signaling. Activating a pro-keloid target is unfavorable."
+  },
+  {
+    "drug_name": "DEXAMETHASONE",
+    "gene_symbol": "SMAD3",
+    "action_direction": "inhibitor",
+    "confidence": "medium",
+    "source": "PubMed:15681343, PubMed:11483860",
+    "keloid_target_role": "pro_keloid",
+    "net_effect": "beneficial",
+    "notes": "GR activation interferes with SMAD3-dependent transcription via direct GR-SMAD3 protein interaction and induction of inhibitory SMAD7. Demonstrated in lung fibroblasts \u2014 reduces TGF-\u03b21-induced SMAD3 phosphorylation."
+  },
+  {
+    "drug_name": "DEXAMETHASONE",
+    "gene_symbol": "VEGFA",
+    "action_direction": "inhibitor",
+    "confidence": "high",
+    "source": "PubMed:12042317, PubMed:16081860",
+    "keloid_target_role": "pro_keloid",
+    "net_effect": "beneficial",
+    "notes": "Potent VEGF suppressor \u2014 clinically exploited in intravitreal implants (Ozurdex). GR activation suppresses VEGF transcription via NF-kB and AP-1 inhibition and reduces HIF-1a-mediated VEGF induction."
+  },
+  {
+    "drug_name": "DEXAMETHASONE",
+    "gene_symbol": "KDR",
+    "action_direction": "inhibitor",
+    "confidence": "medium",
+    "source": "PubMed:15520188, PubMed:17035535",
+    "keloid_target_role": "pro_keloid",
+    "net_effect": "beneficial",
+    "notes": "Corticosteroids downregulate VEGFR2/KDR expression on endothelial cells. Contributes to anti-angiogenic effects beyond VEGF suppression. Demonstrated in dermal microvascular endothelial cells."
+  },
+  {
+    "drug_name": "DEXAMETHASONE",
+    "gene_symbol": "CTNNB1",
+    "action_direction": "inhibitor",
+    "confidence": "low",
+    "source": "PubMed:15878872, PubMed:20133788",
+    "keloid_target_role": "pro_keloid",
+    "net_effect": "beneficial",
+    "notes": "GR activation can induce GSK-3B activity promoting beta-catenin degradation and interact with TCF/LEF to suppress Wnt target genes. Evidence is mixed across cell types \u2014 low confidence for keloid fibroblasts specifically."
   }
 ]
