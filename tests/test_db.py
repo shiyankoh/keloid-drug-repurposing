@@ -192,3 +192,12 @@ def test_docking_results_foreign_key_constraint(db_conn):
             (999, 999, "vina", -8.5),
         )
         db_conn.commit()
+
+
+def test_migrate_directionality_idempotent(db_conn):
+    from scripts.db import migrate_directionality_columns
+    init_db(db_conn)
+    migrate_directionality_columns(db_conn)  # first run
+    migrate_directionality_columns(db_conn)  # second run should not raise
+    cols = [r[1] for r in db_conn.execute("PRAGMA table_info(drug_targets)").fetchall()]
+    assert "action_direction" in cols

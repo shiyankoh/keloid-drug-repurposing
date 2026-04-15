@@ -1,23 +1,23 @@
-gene_symbol,target_name,pathway,evidence_type,evidence_strength,source
-TGFB1,transforming growth factor beta 1,TGF-β/Smad,functional,0.7,manual_curation
-TGFB2,transforming growth factor beta 2,TGF-β/Smad,functional,0.7,manual_curation
-SMAD3,SMAD family member 3,TGF-β/Smad,genetic,0.7,manual_curation
-SMAD2,SMAD family member 2,TGF-β/Smad,functional,0.7,manual_curation
-MTOR,mechanistic target of rapamycin kinase,PI3K/AKT/mTOR,functional,0.7,manual_curation
-PIK3CA,phosphatidylinositol-4_5-bisphosphate 3-kinase catalytic subunit alpha,PI3K/AKT/mTOR,functional,0.7,manual_curation
-AKT1,AKT serine/threonine kinase 1,PI3K/AKT/mTOR,functional,0.7,manual_curation
-CTNNB1,catenin beta 1,Wnt/β-catenin,functional,0.7,manual_curation
-WNT3A,Wnt family member 3A,Wnt/β-catenin,expression,0.7,manual_curation
-JAK2,Janus kinase 2,JAK/STAT,functional,0.7,manual_curation
-STAT3,signal transducer and activator of transcription 3,JAK/STAT,expression,0.7,manual_curation
-MAPK1,mitogen-activated protein kinase 1,MAPK/ERK,functional,0.7,manual_curation
-MAPK3,mitogen-activated protein kinase 3,MAPK/ERK,functional,0.7,manual_curation
-EGFR,epidermal growth factor receptor,EGFR,expression,0.7,manual_curation
-IL6,interleukin 6,IL-6/TNF-α,expression,0.7,manual_curation
-TNF,tumor necrosis factor,IL-6/TNF-α,functional,0.7,manual_curation
-COL1A1,collagen type I alpha 1 chain,Collagen biosynthesis,expression,0.7,manual_curation
-COL1A2,collagen type I alpha 2 chain,Collagen biosynthesis,expression,0.7,manual_curation
-COL3A1,collagen type III alpha 1 chain,Collagen biosynthesis,expression,0.7,manual_curation
-CYP24A1,cytochrome P450 family 24 subfamily A member 1,Vitamin D metabolism,genetic,0.7,manual_curation
-VEGFA,vascular endothelial growth factor A,VEGF,expression,0.7,manual_curation
-KDR,kinase insert domain receptor,VEGF,functional,0.7,manual_curation
+gene_symbol,target_name,pathway,evidence_type,evidence_strength,source,target_role
+TGFB1,transforming growth factor beta 1,TGF-β/Smad,functional,0.7,manual_curation,pro_keloid
+TGFB2,transforming growth factor beta 2,TGF-β/Smad,functional,0.7,manual_curation,pro_keloid
+SMAD3,SMAD family member 3,TGF-β/Smad,genetic,0.7,manual_curation,pro_keloid
+SMAD2,SMAD family member 2,TGF-β/Smad,functional,0.7,manual_curation,pro_keloid
+MTOR,mechanistic target of rapamycin kinase,PI3K/AKT/mTOR,functional,0.7,manual_curation,pro_keloid
+PIK3CA,phosphatidylinositol-4_5-bisphosphate 3-kinase catalytic subunit alpha,PI3K/AKT/mTOR,functional,0.7,manual_curation,pro_keloid
+AKT1,AKT serine/threonine kinase 1,PI3K/AKT/mTOR,functional,0.7,manual_curation,pro_keloid
+CTNNB1,catenin beta 1,Wnt/β-catenin,functional,0.7,manual_curation,pro_keloid
+WNT3A,Wnt family member 3A,Wnt/β-catenin,expression,0.7,manual_curation,pro_keloid
+JAK2,Janus kinase 2,JAK/STAT,functional,0.7,manual_curation,pro_keloid
+STAT3,signal transducer and activator of transcription 3,JAK/STAT,expression,0.7,manual_curation,pro_keloid
+MAPK1,mitogen-activated protein kinase 1,MAPK/ERK,functional,0.7,manual_curation,pro_keloid
+MAPK3,mitogen-activated protein kinase 3,MAPK/ERK,functional,0.7,manual_curation,pro_keloid
+EGFR,epidermal growth factor receptor,EGFR,expression,0.7,manual_curation,pro_keloid
+IL6,interleukin 6,IL-6/TNF-α,expression,0.7,manual_curation,pro_keloid
+TNF,tumor necrosis factor,IL-6/TNF-α,functional,0.7,manual_curation,context_dependent
+COL1A1,collagen type I alpha 1 chain,Collagen biosynthesis,expression,0.7,manual_curation,pro_keloid
+COL1A2,collagen type I alpha 2 chain,Collagen biosynthesis,expression,0.7,manual_curation,pro_keloid
+COL3A1,collagen type III alpha 1 chain,Collagen biosynthesis,expression,0.7,manual_curation,pro_keloid
+CYP24A1,cytochrome P450 family 24 subfamily A member 1,Vitamin D metabolism,genetic,0.7,manual_curation,pro_keloid
+VEGFA,vascular endothelial growth factor A,VEGF,expression,0.7,manual_curation,pro_keloid
+KDR,kinase insert domain receptor,VEGF,functional,0.7,manual_curation,pro_keloid

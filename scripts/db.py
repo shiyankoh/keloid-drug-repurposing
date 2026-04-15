@@ -25,6 +25,7 @@ def init_db(conn):
             evidence_type TEXT NOT NULL,
             evidence_strength REAL NOT NULL,
             source TEXT NOT NULL,
+            target_role TEXT DEFAULT 'pro_keloid',
             created_at TEXT DEFAULT (datetime('now'))
         );
 
@@ -43,6 +44,7 @@ def init_db(conn):
             drug_id INTEGER NOT NULL REFERENCES drugs(id),
             gene_symbol TEXT NOT NULL,
             action_type TEXT,
+            action_direction TEXT,
             source TEXT NOT NULL,
             created_at TEXT DEFAULT (datetime('now'))
         );
@@ -83,4 +85,19 @@ def init_db(conn):
             created_at TEXT DEFAULT (datetime('now'))
         );
     """)
+    conn.commit()
+
+
+def migrate_directionality_columns(conn):
+    """Add directionality columns if they don't exist. Idempotent."""
+    migrations = [
+        "ALTER TABLE drug_targets ADD COLUMN action_direction TEXT",
+        "ALTER TABLE keloid_targets ADD COLUMN target_role TEXT DEFAULT 'pro_keloid'",
+    ]
+    for sql in migrations:
+        try:
+            conn.execute(sql)
+        except sqlite3.OperationalError as e:
+            if 'duplicate column name' not in str(e):
+                raise
     conn.commit()
