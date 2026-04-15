@@ -112,3 +112,37 @@ class TestInsertTargets:
         insert_targets(db_conn, csv_targets, api_targets)
         cursor = db_conn.execute("SELECT COUNT(*) as cnt FROM keloid_targets")
         assert cursor.fetchone()["cnt"] == 4
+
+
+def test_seed_stores_target_role(db_conn):
+    """target_role from CSV is stored in keloid_targets."""
+    from scripts.seed_keloid_targets import parse_seed_csv, insert_targets
+    from scripts.db import migrate_directionality_columns
+    import tempfile, os, csv
+
+    tmp = tempfile.NamedTemporaryFile(mode='w', suffix='.csv', delete=False)
+    writer = csv.DictWriter(tmp, fieldnames=[
+        'gene_symbol','target_name','pathway','evidence_type',
+        'evidence_strength','source','target_role'
+    ])
+    writer.writeheader()
+    writer.writerow({
+        'gene_symbol': 'MTOR', 'target_name': 'mTOR kinase',
+        'pathway': 'PI3K/AKT/mTOR', 'evidence_type': 'functional',
+        'evidence_strength': '0.7', 'source': 'manual_curation',
+        'target_role': 'pro_keloid'
+    })
+    tmp.close()
+
+    init_db(db_conn)
+    migrate_directionality_columns(db_conn)
+    with open(tmp.name) as f:
+        targets = parse_seed_csv(f)
+    insert_targets(db_conn, targets, [])
+
+    row = db_conn.execute(
+        "SELECT target_role FROM keloid_targets WHERE gene_symbol = 'MTOR'"
+    ).fetchone()
+    os.unlink(tmp.name)
+    assert row is not None
+    assert row['target_role'] == 'pro_keloid'

@@ -55,6 +55,7 @@ def parse_seed_csv(file_obj):
             "evidence_type": row["evidence_type"],
             "evidence_strength": float(row["evidence_strength"]),
             "source": row["source"],
+            "target_role": row.get("target_role", "pro_keloid"),
         })
     return targets
 
@@ -119,19 +120,25 @@ def fetch_opentargets(cache_path=None):
 def insert_targets(conn, csv_targets, api_targets):
     """Insert targets into keloid_targets. CSV seeds are inserted first
     so they win on gene_symbol UNIQUE conflict (INSERT OR IGNORE)."""
-    sql = """
+    csv_sql = """
+        INSERT OR IGNORE INTO keloid_targets
+        (gene_symbol, target_name, ensembl_id, pathway, evidence_type, evidence_strength, source, target_role)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+    """
+    api_sql = """
         INSERT OR IGNORE INTO keloid_targets
         (gene_symbol, target_name, ensembl_id, pathway, evidence_type, evidence_strength, source)
         VALUES (?, ?, ?, ?, ?, ?, ?)
     """
     for t in csv_targets:
-        conn.execute(sql, (
+        conn.execute(csv_sql, (
             t["gene_symbol"], t["target_name"], t["ensembl_id"],
             t["pathway"], t["evidence_type"], t["evidence_strength"], t["source"],
+            t.get("target_role", "pro_keloid"),
         ))
 
     for t in api_targets:
-        conn.execute(sql, (
+        conn.execute(api_sql, (
             t["gene_symbol"], t["target_name"], t["ensembl_id"],
             t["pathway"], t["evidence_type"], t["evidence_strength"], t["source"],
         ))
