@@ -73,3 +73,16 @@ Started: Wed 15 Apr 2026 23:09:33 +08
   - NSAIDs with off-target kinase/signaling effects can have medium confidence even though the primary mechanism doesn't match our gene list
   - All 4 celecoxib targets are pro_keloid with inhibitor direction → all net_effect='beneficial'
 ---
+
+## 2026-04-15 - US-006
+- Researched PEGINTERFERON ALFA-2B directionality against EGFR, IL6, JAK2
+- ChEMBL ID: CHEMBL1201561, type: Protein, mechanism: Interferon alpha/beta receptor (IFNAR) agonist — no matches for our gene list
+- EGFR: inhibitor (low confidence) — IFN-α downregulates EGFR expression, evidence from epithelial models
+- IL6: inhibitor (low confidence) — IFN-α suppresses pro-inflammatory cytokines including IL-6 in fibrotic contexts
+- JAK2: activator (medium confidence) — type I IFN signals through JAK-STAT; JAK2 associates with IFNAR complex. First unfavorable net_effect in our dataset.
+- Files changed: docs/directionality/PEGINTERFERON_ALFA-2B.md (created), data/directionality_annotations.json (3 entries added, total now 18)
+- **Learnings for future iterations:**
+  - Not all drugs have purely beneficial profiles — IFN-α activates JAK2 (pro_keloid), yielding an unfavorable net_effect
+  - Type I IFN canonical signaling uses JAK1/TYK2, but JAK2 also participates — this is a nuanced distinction worth documenting
+  - Biologics (proteins) appear in ChEMBL with mechanisms, unlike antibodies which sometimes miss
+---
