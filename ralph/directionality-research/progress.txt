@@ -132,3 +132,16 @@ Started: Wed 15 Apr 2026 23:09:33 +08
   - PI3K/mTOR feedback loop (O'Reilly 2006) is a critical nuance — mTOR inhibitors may paradoxically activate PI3K/AKT. Use 'modulator' with net_effect='unclear' rather than forcing a direction
   - Sirolimus is the first drug where one target gets 'modulator' direction — validates that not everything is simply inhibitor/activator/unknown
 ---
+
+## 2026-04-15 - US-010
+- Researched ASPIRIN directionality against PIK3CA, TGFB1, CYP24A1
+- ChEMBL ID: CHEMBL25, mechanism: Cyclooxygenase inhibitor (COX-1/COX-2) — no matches for our gene list
+- PIK3CA: inhibitor (medium confidence) — COX-independent PI3K/AKT suppression, disrupts K-Ras–p110α interaction, enhanced in PIK3CA-mutant cells
+- TGFB1: inhibitor (medium confidence) — suppresses TGF-β1–Smad2/3 pathway in fibrosis models; aspirin-triggered resolvin D1 blocks TGF-β1-induced EMT
+- CYP24A1: unknown (low confidence) — no published evidence of aspirin modulating CYP24A1 expression or activity. Only hit is pharmacogenomic SNP association.
+- Files changed: docs/directionality/ASPIRIN.md (created), data/directionality_annotations.json (3 entries added, total now 32)
+- **Learnings for future iterations:**
+  - Aspirin has well-documented COX-independent effects on PI3K and TGF-β pathways — don't assume all NSAID effects flow through prostaglandin inhibition
+  - CYP24A1 is a rare gene with very little drug interaction literature — 'unknown' with low confidence is appropriate when PubMed returns zero mechanistic results
+  - Aspirin-triggered resolvin D1 is a distinct metabolite with its own anti-fibrotic mechanism — note the distinction between aspirin direct effects and resolvin-mediated effects
+---

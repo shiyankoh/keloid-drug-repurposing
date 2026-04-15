@@ -288,5 +288,35 @@
     "keloid_target_role": "pro_keloid",
     "net_effect": "beneficial",
     "notes": "Indirect \u2014 mTOR inhibition reduces JAK-STAT signaling output in myeloproliferative models. Rapamycin suppresses JAK2-V617F-driven proliferation in synergy with JAK2 inhibitors. No direct JAK2 kinase inhibition."
+  },
+  {
+    "drug_name": "ASPIRIN",
+    "gene_symbol": "PIK3CA",
+    "action_direction": "inhibitor",
+    "confidence": "medium",
+    "source": "PubMed:32000660, PubMed:28849118",
+    "keloid_target_role": "pro_keloid",
+    "net_effect": "beneficial",
+    "notes": "Aspirin inhibits PI3K/AKT signaling via COX-independent mechanisms. Disrupts K-Ras–p110α interaction in leiomyoma cells and shows enhanced efficacy in PIK3CA-mutant colorectal cancer via PI3K/Akt/Raptor pathway suppression."
+  },
+  {
+    "drug_name": "ASPIRIN",
+    "gene_symbol": "TGFB1",
+    "action_direction": "inhibitor",
+    "confidence": "medium",
+    "source": "PubMed:32323728, PubMed:27573422",
+    "keloid_target_role": "pro_keloid",
+    "net_effect": "beneficial",
+    "notes": "Aspirin suppresses TGF-β1–Smad2/Smad3 pathway, reducing endometrial fibrosis markers. Aspirin-triggered resolvin D1 further inhibits TGF-β1-induced EMT via mTOR/PKM2 pathway. Directly relevant to anti-fibrotic action in keloids."
+  },
+  {
+    "drug_name": "ASPIRIN",
+    "gene_symbol": "CYP24A1",
+    "action_direction": "unknown",
+    "confidence": "low",
+    "source": "PubMed:23945404, ChEMBL:CHEMBL25",
+    "keloid_target_role": "pro_keloid",
+    "net_effect": "unclear",
+    "notes": "No published evidence of aspirin modulating CYP24A1 expression or enzymatic activity. Only PubMed association is a pharmacogenomic SNP (rs4809957) linked to aspirin-induced GI bleeding risk — not a mechanistic drug-gene interaction."
   }
 ]
