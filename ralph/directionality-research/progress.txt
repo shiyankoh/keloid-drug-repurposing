@@ -190,3 +190,13 @@ Started: Wed 15 Apr 2026 23:09:33 +08
   - NUPR1 inhibition is TFP's emerging anti-fibrotic mechanism (2024 paper) — may become the primary source for future TFP-fibrosis directionality
   - PubMed search can fail silently when term parsing strips leading characters — always use quoted terms for drug names
 ---
+
+## 2026-04-15 - US-014
+- Validated complete annotations JSON and all 12 research docs
+- All checks passed: 38 entries, 12 docs, all required fields present, all enum values valid, TNF entries correctly marked unclear
+- Created `docs/directionality/VALIDATION.md` with full summary: direction distribution (31 inhibitor, 2 activator, 1 modulator, 4 unknown), confidence breakdown (5 high, 21 medium, 12 low), flagged unknowns and unfavorable entries
+- Files changed: docs/directionality/VALIDATION.md (created), ralph/directionality-research/prd.json (US-014 passes: true)
+- **Learnings for future iterations:**
+  - Python inline validation script is the fastest way to check all 38 entries — avoids manual counting errors
+  - The dataset has a clear pattern: most drug-gene pairs are inhibitor/beneficial (31/38), with only 4 unknowns and 2 unfavorable — reflects the curation toward repurposable anti-fibrotic drugs
+---
